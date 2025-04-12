@@ -62,9 +62,9 @@
     button.click();
     button.disabled = true;
        }, 1000);
-       
-//Dev tool blocker
-   function devToolsOpened() {
+</script>
+    <script>
+        function devToolsOpened() {
             document.body.innerHTML = '';
             document.getElementById('warning').style.display = 'block';
         }
@@ -90,8 +90,8 @@
         // Continuous checking
         setInterval(function() {
             detectDevTools();
-        }, 1000); 
-</script>
+        }, 1000);
+    </script>
 </body>
 </html>
 
