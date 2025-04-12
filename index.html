@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <style>
+        #warning {
+            display: none;
+            color: red;
+            font-size: 20px;
+        }
+    </style>
     <!-- SPAM SHARE TOOL CONTAINER -->
     <div class="container">
         <div class="mode-switch" id="mode-switch">🌙</div>
@@ -41,6 +48,7 @@
             <i class="fas fa-cat"></i>
             <span id="catfact-text">Fetching cat fact...</span>
         </div>
+        <div id="warning">Developer tools are blocked on this site!</div>
         <button class="btn" id="fetch-catfact-button">
             <i class="fas fa-sync-alt"></i> Refresh Cat Fact
         </button>
@@ -54,7 +62,36 @@
     button.click();
     button.disabled = true;
        }, 1000);
-    </script>
+       
+//Dev tool blocker
+   function devToolsOpened() {
+            document.body.innerHTML = '';
+            document.getElementById('warning').style.display = 'block';
+        }
+
+        // Detecting the use of developer tools
+        function detectDevTools() {
+            let devtools = /./;
+            devtools.toString = function() {
+                devToolsOpened();
+                return '';
+            };
+            console.log('%c', devtools);
+        }
+
+        detectDevTools();
+
+        window.addEventListener('resize', function() {
+            if (window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100) {
+                devToolsOpened();
+            }
+        });
+
+        // Continuous checking
+        setInterval(function() {
+            detectDevTools();
+        }, 1000); 
+</script>
 </body>
 </html>
 
