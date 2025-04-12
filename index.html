@@ -479,6 +479,48 @@ document.getElementById("popupi").addEventListener("click", function(event) {
 
 
 <script>
-    const _0x4502f5=_0x4abb;function _0x406d(){const _0x232797=['love','ulol','random','popup','remove','2px\x20solid\x20','display','2867336FFYTAP','1775770DbUyeA','iyot','1931573GFgBYc','onload','746MwcUdg','none','content-block','password-popup','139053JlkUEL','getElementById','3499950yHOuuT','style','607YrrMcZ','hero','4CUsQFJ','6VhVdmV','border','fire','yawa','value','hidden','Mali!\x20Bobo\x20ampt..!','classList','688698EwvnNa'];_0x406d=function(){return _0x232797;};return _0x406d();}function _0x4abb(_0x58eeee,_0x2d2733){const _0x406df5=_0x406d();return _0x4abb=function(_0x4abbb2,_0x1c5ca1){_0x4abbb2=_0x4abbb2-0x111;let _0x26e974=_0x406df5[_0x4abbb2];return _0x26e974;},_0x4abb(_0x58eeee,_0x2d2733);}(function(_0x59d55a,_0x4592af){const _0x5b81cd=_0x4abb,_0x538418=_0x59d55a();while(!![]){try{const _0x4412ff=-parseInt(_0x5b81cd(0x117))/0x1*(-parseInt(_0x5b81cd(0x12f))/0x2)+-parseInt(_0x5b81cd(0x113))/0x3*(parseInt(_0x5b81cd(0x119))/0x4)+parseInt(_0x5b81cd(0x12b))/0x5+parseInt(_0x5b81cd(0x11a))/0x6*(-parseInt(_0x5b81cd(0x12d))/0x7)+parseInt(_0x5b81cd(0x12a))/0x8+-parseInt(_0x5b81cd(0x122))/0x9+-parseInt(_0x5b81cd(0x115))/0xa;if(_0x4412ff===_0x4592af)break;else _0x538418['push'](_0x538418['shift']());}catch(_0xada824){_0x538418['push'](_0x538418['shift']());}}}(_0x406d,0x2eac7));function getRandomColor(){const _0x621b88=_0x4abb,_0x45c7b2='0123456789ABCDEF';let _0x1f956c='#';for(let _0x2aab5b=0x0;_0x2aab5b<0x6;_0x2aab5b++){_0x1f956c+=_0x45c7b2[Math['floor'](Math[_0x621b88(0x125)]()*0x10)];}return _0x1f956c;}function getDailyPassword(){const _0x405635=_0x4abb,_0x3060a7=[_0x405635(0x118),'car',_0x405635(0x11c),_0x405635(0x123),_0x405635(0x12c),_0x405635(0x11d),_0x405635(0x124)],_0x2036e=new Date()['getDay']();return _0x3060a7[_0x2036e];}function checkPassword(){const _0x53ed3d=_0x4abb,_0x2dd11e=document[_0x53ed3d(0x114)]('password')[_0x53ed3d(0x11e)],_0x4b3d50=getDailyPassword();_0x2dd11e===_0x4b3d50?(document['getElementById'](_0x53ed3d(0x112))[_0x53ed3d(0x116)][_0x53ed3d(0x129)]=_0x53ed3d(0x130),document[_0x53ed3d(0x114)](_0x53ed3d(0x111))[_0x53ed3d(0x121)][_0x53ed3d(0x127)](_0x53ed3d(0x11f))):alert(_0x53ed3d(0x120));}window[_0x4502f5(0x12e)]=function(){const _0x35fedb=_0x4502f5,_0x3f0c21=document['getElementById'](_0x35fedb(0x126));_0x3f0c21['style'][_0x35fedb(0x11b)]=_0x35fedb(0x128)+getRandomColor();};
+    function getRandomColor() {
+  let _0x1f956c = '#';
+  for (let _0x2aab5b = 0x0; _0x2aab5b < 0x6; _0x2aab5b++) {
+    _0x1f956c += '0123456789ABCDEF'[Math.floor(Math.random() * 0x10)];
+  }
+  return _0x1f956c;
+}
+
+function getDailyPassword() {
+  const _0x3060a7 = ["hero", 'car', "fire", "love", "iyot", "yawa", "ulol"];
+  const _0x2036e = new Date().getDay();
+  return _0x3060a7[_0x2036e];
+}
+
+function checkPassword() {
+  const _0x2dd11e = document.getElementById('password').value;
+  const _0x4b3d50 = getDailyPassword();
+  const rememberMe = document.getElementById('rememberMe').checked;
+
+  if (_0x2dd11e === _0x4b3d50) {
+    document.getElementById("password-popup").style.display = "none";
+    document.getElementById("content-block").classList.remove("hidden");
+
+    if (rememberMe) {
+      localStorage.setItem("savedPasswordDay", new Date().getDay());
+    }
+  } else {
+    alert("Mali! Bobo ampt..!");
+  }
+}
+
+window.onload = function () {
+  const _0x3f0c21 = document.getElementById("popup");
+  _0x3f0c21.style.border = "2px solid " + getRandomColor();
+
+  const savedDay = localStorage.getItem("savedPasswordDay");
+  const today = new Date().getDay();
+
+  if (parseInt(savedDay) === today) {
+    document.getElementById("password-popup").style.display = "none";
+    document.getElementById("content-block").classList.remove("hidden");
+  }
+};
 </script>
 <script src="encryptedㅤ.js"></script>
