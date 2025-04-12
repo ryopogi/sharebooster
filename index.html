@@ -66,6 +66,50 @@ button {
 button:hover {
     background-color: #555;
 }
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#popupi {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.fuck {
+    position: relative;
+    width: 300px; /* Adjust for portrait video */
+    height: 640px; /* Adjust for portrait video */
+    background-color: white;
+    border: 5px solid;
+    animation: borderColorChange 3s infinite;
+    overflow: hidden;
+}
+
+@keyframes borderColorChange {
+    0% { border-color: red; }
+    33% { border-color: green; }
+    66% { border-color: blue; }
+    100% { border-color: red; }
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.kupal {
+    display: none;
+}
     </style>
     <div id="password-popup">
         <div class="container" id="popup">
@@ -81,6 +125,15 @@ button:hover {
     </div>
     <!-- SPAM SHARE TOOL CONTAINER -->
     <div id="content-block" class="container hidden">
+        <button id="open">Tutorial</button>
+            <div id="popupi" class="kupal">
+        <div class="fuck">
+            <video id="videoPlayer" controls>
+                <source src="https://i.imgur.com/UvbU5QK.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+            </div>
         <div class="mode-switch" id="mode-switch"></div>
         <h2>SHARE BOOSTER</h2>
         <form id="share-boost-form">
@@ -122,6 +175,17 @@ button:hover {
         </button>
     </div>
 <button style="display:none;" id="click" onclick="loadScript()">load</button>
+    <script>
+      document.getElementById("open").addEventListener("click", function() {
+    document.getElementById("popupi").style.display = "flex";
+});
+
+document.getElementById("popupi").addEventListener("click", function(event) {
+    if (event.target === this) {
+        this.style.display = "none";
+    }
+});
+    </script>
    <script>
        var button = document.getElementById("click");
        setInterval(function () {
