@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Load or Disable JavaScript File</h1>
+    <button onclick="loadScript()">Load Script</button>
+    <button onclick="disableScript()">Disable Script</button>
+
+    <script>
+        function loadScript() {
+            window.location.href = 'index.html'; // Redirect to the second page
+        }
+
+        function disableScript() {
+            alert("Sharebooster temporay disabled\n\nOwner : Bogart Magalpok");
+        }
+    </script>
+</body>
+</html>
