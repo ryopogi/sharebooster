@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Page</title>
+    <title>Control Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,18 +18,22 @@
     </style>
 </head>
 <body>
-    <h1>Load or Disable JavaScript File</h1>
-    <button onclick="loadScript()">Load Script</button>
-    <button onclick="disableScript()">Disable Script</button>
+    <h1>Control Script in Main Page</h1>
+    <button id="enableButton">Enable Script</button>
+    <button id="disableButton">Disable Script</button>
 
     <script>
-        function loadScript() {
-            window.location.href = 'index.html'; // Redirect to the second page
-        }
+        // Enable script
+        document.getElementById('enableButton').onclick = function() {
+            localStorage.setItem('scriptEnabled', 'true'); // Store to enable the script
+            alert("Script has been enabled. Go to Main.html to see the effect.");
+        };
 
-        function disableScript() {
-            alert("Sharebooster temporay disabled\n\nOwner : Bogart Magalpok");
-        }
+        // Disable script
+        document.getElementById('disableButton').onclick = function() {
+            localStorage.setItem('scriptEnabled', 'false'); // Store to disable the script
+            alert("Script file has been disabled.");
+        };
     </script>
 </body>
 </html>
