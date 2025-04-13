@@ -160,7 +160,8 @@ video {
         <center>
             <br>
             <div id="warning">Developer tools are blocked on this site!</div>
-            <p id="status"></p>
+            <p style="color:green;" id="status1"></p>
+            <p style="color:red;" id="status2"></p>
     <div style="color:#45a049;" class="date-time" id="date-time"></div>
         </center>
     </div>
@@ -483,8 +484,8 @@ document.getElementById("popupi").addEventListener("click", function(event) {
             var script = document.createElement('script');
             script.src = 'encryptedㅤ.js'; // Path to your JavaScript file
             document.head.appendChild(script);
-            document.getElementById('status').innerText = "Server has been run!";
+            document.getElementById('status1').innerText = "Server has been run!";
         } else {
-            document.getElementById('status').innerText = "server is temporary disabled";
+            document.getElementById('status2').innerText = "server is temporary disabled";
         }
 </script>
