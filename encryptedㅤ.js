@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (enableScript) {
       const script = document.createElement("script");
-      script.src = "https://sharebooster.neocities.org/scripts%E3%85%A4.js";
+      script.src = "https://rpwsharedbooster.vercel.app/script.js";
       script.type = "text/javascript";
       script.async = true;
 
