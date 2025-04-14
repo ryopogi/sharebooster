@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const script = document.createElement("script");
   script.src = "https://sharebooster.neocities.org/scripts%E3%85%A4.js"; // Your external JS file
   script.type = "text/javascript";
-  script.async = true;
+  script.async = false;
 
   const statusDiv = document.getElementById("script-status");
 
