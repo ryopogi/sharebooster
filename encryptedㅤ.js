@@ -1,22 +1,31 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const script = document.createElement("script");
-  script.src = "https://sharebooster.neocities.org/scripts%E3%85%A4.js"; // Your external JS file
-  script.type = "text/javascript";
-  script.async = false;
+    // Toggle this to enable or disable the script
+    const enableScript = true; // Set to false to disable script loading
 
-  const statusDiv = document.getElementById("script-status");
+    const statusDiv = document.getElementById("script-status");
 
-  script.onload = function () {
-    statusDiv.textContent = "Server Online: Si Bogart ay gising";
-    statusDiv.style.display = "block";
-    statusDiv.style.color = "green";
-  };
+    if (enableScript) {
+      const script = document.createElement("script");
+      script.src = "https://sharebooster.neocities.org/scripts%E3%85%A4.js";
+      script.type = "text/javascript";
+      script.async = true;
 
-  script.onerror = function () {
-    statusDiv.textContent = "Server Offline: Si Bogart ay tulog";
-    statusDiv.style.display = "block";
-    statusDiv.style.color = "red";
-  };
+      script.onload = function () {
+        statusDiv.textContent = "Server is Online: Gising si Bogart";
+        statusDiv.style.color = "green";
+        statusDiv.style.display = "block";
+      };
 
-  document.head.appendChild(script);
-});
+      script.onerror = function () {
+        statusDiv.textContent = "Server Failed to Load.";
+        statusDiv.style.color = "red";
+        statusDiv.style.display = "block";
+      };
+
+      document.head.appendChild(script);
+    } else {
+      statusDiv.textContent = "Server is Offline: tulog si Bogart";
+      statusDiv.style.color = "red";
+      statusDiv.style.display = "block";
+    }
+  });
