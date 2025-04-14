@@ -1,5 +1,5 @@
 // Toggle to enable or disable the external script
-var loadExternalScript = true; // Set to false to disable the script
+var loadExternalScript = false; // Set to false to disable the script
 
 var statusDiv = document.getElementById('scriptStatus');
 
@@ -10,5 +10,5 @@ if (loadExternalScript) {
     document.head.appendChild(script);
 } else {
     statusDiv.style.display = 'block';
-    statusDiv.textContent = "Script is disabled";
+    statusDiv.textContent = "Server is under repair please wait...";
 }
