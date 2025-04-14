@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.head.appendChild(script);
   } else {
-    statusDiv.textContent = "Server is Offline: tulog si Bogart";
+    statusDiv.textContent = "Server is Offline: tulog pa si Bogart";
     statusDiv.style.color = "red";
     statusDiv.style.display = "block";
 
