@@ -1,7 +1,3 @@
-<!-- Status div (initially hidden) -->
-<div id="scriptStatus" style="display: none; color: red;"></div>
-
-<script>
 // Toggle to enable or disable the external script
 var loadExternalScript = true; // Set to false to disable the script
 
@@ -16,4 +12,3 @@ if (loadExternalScript) {
     statusDiv.style.display = 'block';
     statusDiv.textContent = "Script is disabled";
 }
-</script>
