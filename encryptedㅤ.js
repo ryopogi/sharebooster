@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Toggle this to enable or disable the script
-    const enableScript = true; // Set to false to disable script loading
+    const enableScript = false; // Set to false to disable script loading
 
     const statusDiv = document.getElementById("script-status");
 
