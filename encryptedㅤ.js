@@ -7,13 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const statusDiv = document.getElementById("script-status");
 
   script.onload = function () {
-    statusDiv.textContent = "Script Enabled: Si Bogart ay Tulog, Wag istorbohin";
+    statusDiv.textContent = "Server Online: Si Bogart ay gising";
     statusDiv.style.display = "block";
     statusDiv.style.color = "green";
   };
 
   script.onerror = function () {
-    statusDiv.textContent = "Script Disabled or Failed to Load.";
+    statusDiv.textContent = "Server Offline: Si Bogart ay tulog";
     statusDiv.style.display = "block";
     statusDiv.style.color = "red";
   };
