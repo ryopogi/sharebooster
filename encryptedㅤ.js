@@ -1,4 +1,4 @@
-var loadExternalScript = false; // Editable toggle
+var loadExternalScript = true; // Editable toggle
 
 (function(){
     const _0x4e9f = [
