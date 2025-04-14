@@ -12,7 +12,7 @@ var loadExternalScript = false; // Editable toggle
         'display',
         'none',
         'textContent',
-        'Script is disabled'
+        'Server is temporary disabled.'
     ];
 
     const part1 = 'https://sh';
@@ -28,10 +28,8 @@ var loadExternalScript = false; // Editable toggle
         s[_0x4e9f[2]] = finalURL;
         document[_0x4e9f[4]][_0x4e9f[3]](s);
     }else{
-        var d = document[_0x4e9f[0]]('div');
-        d.id = 'scriptStatus';
-        d[_0x4e9f[9]] = 'Server is temporary disabled.';
+        var d = document[_0x4e9f[5]]('scriptStatus');
         d[_0x4e9f[6]][_0x4e9f[7]] = 'block';
-        document.body[_0x4e9f[3]](d);
+        d[_0x4e9f[9]] = _0x4e9f[10];
     }
 })();
