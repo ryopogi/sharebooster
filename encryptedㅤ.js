@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const enableScript = false;
+  const enableScript = true;
 
   const statusDiv = document.getElementById("script-status");
   const serverSelect = document.getElementById("server");
