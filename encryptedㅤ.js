@@ -14,7 +14,7 @@ const enableScript = true;
           "sharebooster",
           ".neocities.",
           "org/",
-          "scriptss",
+          "scriptsss",
           "ㅤ",
           ".js"
         ];
