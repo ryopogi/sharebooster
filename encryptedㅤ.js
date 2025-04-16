@@ -1,4 +1,4 @@
-const enableScript = false;
+const enableScript = true;
 
   (function () {
     document.addEventListener("DOMContentLoaded", function () {
@@ -14,7 +14,7 @@ const enableScript = false;
           "sharebooster",
           ".neocities.",
           "org/",
-          "scripptt",
+          "bograt",
           "ㅤ",
           ".js"
         ];
