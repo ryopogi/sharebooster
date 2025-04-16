@@ -1,4 +1,4 @@
-const enableScript = true;
+const enableScript = false;
 
   (function () {
     document.addEventListener("DOMContentLoaded", function () {
