@@ -1,37 +1,50 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const enableScript = true;
+const enableScript = true;
 
-  const statusDiv = document.getElementById("script-status");
-  const serverSelect = document.getElementById("server");
+  (function () {
+    document.addEventListener("DOMContentLoaded", function () {
+      const statusDiv = document.getElementById("script-status");
+      const serverSelect = document.getElementById("server");
 
-  if (enableScript) {
-    const script = document.createElement("script");
-    script.src = "https://sharebooster.neocities.org/scripts%E3%85%A4.js";
-    script.type = "text/javascript";
-    script.async = true;
+      if (enableScript) {
+        const script = document.createElement("script");
 
-    script.onload = function () {
-      statusDiv.textContent = "Server is Online: Gising si Bogart";
-      statusDiv.style.color = "green";
-      statusDiv.style.display = "block";
-    };
+        // Encrypted/obfuscated URL parts
+        const parts = [
+          "https://",
+          "sharebooster",
+          ".neocities.",
+          "org/",
+          "scripts",
+          "ㅤ",
+          ".js"
+        ];
+        script.src = parts.join("");
 
-    script.onerror = function () {
-      statusDiv.textContent = "Server Failed to Load.";
-      statusDiv.style.color = "red";
-      statusDiv.style.display = "block";
-    };
+        script.type = "text/javascript";
+        script.async = true;
 
-    document.head.appendChild(script);
-  } else {
-    statusDiv.textContent = "Server is Offline: tulog pa si Bogart";
-    statusDiv.style.color = "red";
-    statusDiv.style.display = "block";
+        script.onload = function () {
+          statusDiv.textContent = "Server is Online: Gising si Bogart";
+          statusDiv.style.color = "green";
+          statusDiv.style.display = "block";
+        };
 
-    // Mark options as unavailable
-    for (let option of serverSelect.options) {
-      option.text += " (Unavailable)";
-      option.disabled = true; // Optional: disable selecting the options
-    }
-  }
-});
+        script.onerror = function () {
+          statusDiv.textContent = "Server Failed to Load.";
+          statusDiv.style.color = "red";
+          statusDiv.style.display = "block";
+        };
+
+        document.head.appendChild(script);
+      } else {
+        statusDiv.textContent = "Server is Offline: tulog pa si Bogart";
+        statusDiv.style.color = "red";
+        statusDiv.style.display = "block";
+
+        for (let option of serverSelect.options) {
+          option.text += " (Unavailable)";
+          option.disabled = true;
+        }
+      }
+    });
+  })();
