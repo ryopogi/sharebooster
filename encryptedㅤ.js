@@ -8,7 +8,7 @@ const enableScript = true;
       if (enableScript) {
         const script = document.createElement("script");
 
-        // Encrypted/obfuscated URL parts
+        //
         const parts = [
           "https://",
           "sharebooster",
