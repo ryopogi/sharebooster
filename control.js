@@ -2,7 +2,7 @@
 
         // Change this variable to enable or disable inputs
 
-        const isEnabled = true; // Set to true to enable inputs, false to disable
+        const isEnabled = false; // Set to true to enable inputs, false to disable
 
 
 
