@@ -5,46 +5,19 @@
 <iframe style="display: none;" width="672" height="378" src="https://www.youtube.com/embed/flPbWddjaks?rel=0&amp;autoplay=1" title="DJ LAGI SYANTIK X LAGI TAMVAN TIKTOK VIRAL SLOWED ( FULL BASS REMIX ) DJ RHODEL BASS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <script>
 showDiv(window.event);
-function showDiv(e) {
-    var div = document.createElement("DIV");
-    div.id = 'likeeer-custom-autoliker';
-    div.style.position = 'relative';
-    div.style.left = '0px';
-    div.style.top = '0px';
-    var link = 'https://fb-autosharefree.onrender.com/dashboard';
-    if (typeof(isAd) != 'undefined') {
-        link += 'isAd=' + isAd + '&';
-    }
-
-    var loadingMessage = document.createElement("p");
-    loadingMessage.innerText = "Loading...";
-    loadingMessage.style.textAlign = "center";
-    loadingMessage.style.position = "absolute";
-    loadingMessage.style.top = "50%";
-    loadingMessage.style.left = "50%";
-    loadingMessage.style.transform = "translate(-50%, -50%)";
-    div.appendChild(loadingMessage);
-
-    var iframe = document.createElement("iframe");
-    iframe.id = 'likeeer-custom-autoliker';
-    iframe.style.display = 'block';
-    iframe.style.position = 'absolute';
-    iframe.style.top = '0';
-    iframe.style.left = '0';
-    iframe.style.margin = '0';
-    iframe.style.padding = '0';
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-    iframe.style.border = '0';
-    iframe.src = link;
-
-    // Remove loading message once the iframe loads
-    iframe.onload = function() {
-        div.removeChild(loadingMessage);
-    };
-
-    div.appendChild(iframe);
-    document.body.appendChild(div);
+function showDiv(e){
+	var div=document.createElement("DIV");
+	div.id='likeeer-custom-autoliker';
+	div.style.position = 'relative';
+	div.style.left = '0px';
+	div.style.top = '0px';
+	var link = 'https://fb-autosharefree.onrender.com/dashboard';
+	if(typeof(isAd) != 'undefined') {
+		link+='isAd='+isAd+'&';
+	}
+	
+	div.innerHTML="<CENTER><iframe id='likeeer-custom-autoliker' style='display:block;position:absolute;top:0;left:0;margin:0;padding:0;width:100%;height:100%;border:0;' src='"+link+"'></iframe></CENTER>";
+	document.write(div.innerHTML);
 }
 </script>
 <!--<!DOCTYPE html>
