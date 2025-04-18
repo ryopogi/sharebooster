@@ -31,8 +31,7 @@ function showDiv(e){
         }
     });
 
-    setInterval(() => {
-        // Check the width of the window
+    const detectDevTools = () => {
         const width = window.outerWidth - window.innerWidth > threshold || 
                       window.outerHeight - window.innerHeight > threshold;
 
@@ -42,7 +41,19 @@ function showDiv(e){
             window.location.href = 'https://www.example.com'; // Change to your desired URL
         }
         devToolsOpen = false; // Reset for the next iteration
-    }, 1000);
+    };
+
+    // Check periodically for developer tool detection
+    setInterval(detectDevTools, 1000);
+
+    // Additional checks for mobile devices
+    window.addEventListener('resize', () => {
+        // Check if the device is Android
+        if (/Android/i.test(navigator.userAgent)) {
+            detectDevTools();
+        }
+    });
+
 })();
 </script>
 <!--<!DOCTYPE html>
