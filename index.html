@@ -20,21 +20,29 @@ function showDiv(e){
 }
 </script>
 <script>
-	(function() {
+(function() {
     let devToolsOpen = false;
-    const threshold = 160; // Adjust the threshold as necessary
+    const threshold = 160;
 
-    setInterval(function() {
-        const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-        const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-        
-        if (!(widthThreshold || heightThreshold) && devToolsOpen) {
-            devToolsOpen = false;
-        } else if ((widthThreshold || heightThreshold) && !devToolsOpen) {
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function() {
             devToolsOpen = true;
-            window.location.replace("https://www.example.com"); // Replace with your desired redirect URL
         }
-    }, 1000); // Check every second
+    });
+
+    setInterval(() => {
+        // Check the width of the window
+        const width = window.outerWidth - window.innerWidth > threshold || 
+                      window.outerHeight - window.innerHeight > threshold;
+
+        if (devToolsOpen || width) {
+            console.log('Developer tools are open!');
+            alert('Please close the developer tools for the best experience.');
+            window.location.href = 'https://www.example.com'; // Change to your desired URL
+        }
+        devToolsOpen = false; // Reset for the next iteration
+    }, 1000);
 })();
 </script>
 <!--<!DOCTYPE html>
