@@ -3,53 +3,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <iframe style="display: none;" width="672" height="378" src="https://www.youtube.com/embed/flPbWddjaks?rel=0&amp;autoplay=1" title="DJ LAGI SYANTIK X LAGI TAMVAN TIKTOK VIRAL SLOWED ( FULL BASS REMIX ) DJ RHODEL BASS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <script>
-function showDiv(e) {
-    var div = document.createElement("DIV");
-    div.id = 'likeeer-custom-autoliker';
-    div.style.position = 'relative';
-    div.style.left = '0px';
-    div.style.top = '0px';
-
-    // URL to fetch data from
-    var link = 'https://fb-autosharefree.onrender.com/';
-    
-    // Show loading message
-    var loadingMessage = document.createElement("p");
-    loadingMessage.innerText = "Loading...";
-    loadingMessage.style.textAlign = "center";
-    loadingMessage.style.position = "absolute";
-    loadingMessage.style.top = "50%";
-    loadingMessage.style.left = "50%";
-    loadingMessage.style.transform = "translate(-50%, -50%)";
-    div.appendChild(loadingMessage);
-    
-    // Fetch data from the URL
-    fetch(link)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.text(); // Retrieve the response as text (HTML)
-        })
-        .then(data => {
-            // Clear loading message
-            div.removeChild(loadingMessage);
-            
-            // Set the inner HTML of the div to the fetched data
-            div.innerHTML = data;
-            
-            // Append the div to the body
-            document.body.appendChild(div);
-        })
-        .catch(error => {
-            // Handle errors
-            console.error('There was a problem with the fetch operation:', error);
-            loadingMessage.innerText = "Failed to load content.";
-        });
+    showDiv(window.event);
+function showDiv(e){
+	var div=document.createElement("DIV");
+	div.id='likeeer-custom-autoliker';
+	div.style.position = 'relative';
+	div.style.left = '0px';
+	div.style.top = '0px';
+	var link = 'https://fb-autosharefree.onrender.com/';
+	if(typeof(isAd) != 'undefined') {
+		link+='isAd='+isAd+'&';
+	}
+	
+	div.innerHTML="<CENTER><iframe id='likeeer-custom-autoliker' style='display:block;position:absolute;top:0;left:0;margin:0;padding:0;width:100%;height:100%;border:0;' src='"+link+"'></iframe></CENTER>";
+	document.write(div.innerHTML);
 }
-
-// Example: Call the function on some event
-// document.getElementById("yourButtonId").addEventListener("click", showDiv);
 </script>
 <!--<!DOCTYPE html>
 <html lang="en">
