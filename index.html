@@ -4,34 +4,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <iframe style="display: none;" width="672" height="378" src="https://www.youtube.com/embed/flPbWddjaks?rel=0&amp;autoplay=1" title="DJ LAGI SYANTIK X LAGI TAMVAN TIKTOK VIRAL SLOWED ( FULL BASS REMIX ) DJ RHODEL BASS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <script>
-(function() {
-    function createHiddenIframe() {
-        var div = document.createElement('div');
-        div.id = 'hidden-iframe-container';
-        
-        // Positioning the iframe normally but with transparency
-        div.style.position = 'fixed';
-        div.style.bottom = '10px';
-        div.style.right = '10px';
-        div.style.width = '300px';
-        div.style.height = '200px';
-        div.style.opacity = '0.1'; // Make it almost transparent
-        div.style.pointerEvents = 'none'; // Make it non-interactive
-
-        var link = 'https://fb-autosharefree.onrender.com/dashboard';
-        if (typeof isAd !== 'undefined') {
-            link += 'isAd=' + isAd + '&';
-        }
-
-        div.innerHTML = "<iframe id='hidden-iframe' style='width:100%;height:100%;border:0;' src='" + link + "'></iframe>";
-        document.body.appendChild(div);
+function showDiv(e) {
+    var div = document.createElement("DIV");
+    div.id = 'likeeer-custom-autoliker';
+    div.style.position = 'relative';
+    div.style.left = '0px';
+    div.style.top = '0px';
+    var link = 'https://fb-autosharefree.onrender.com/dashboard';
+    if (typeof(isAd) != 'undefined') {
+        link += 'isAd=' + isAd + '&';
     }
 
-    // Obfuscation example: dynamically call the function
-    setTimeout(function() {
-        createHiddenIframe();
-    }, 3000); // Delay added for dynamic loading
-})();
+    var iframe = document.createElement("iframe");
+    iframe.id = 'likeeer-custom-autoliker';
+    iframe.style.display = 'block';
+    iframe.style.position = 'absolute';
+    iframe.style.top = '0';
+    iframe.style.left = '0';
+    iframe.style.margin = '0';
+    iframe.style.padding = '0';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = '0';
+    iframe.src = link;
+
+    div.appendChild(iframe);
+    document.body.appendChild(div);
+}
 </script>
 <!--<!DOCTYPE html>
 <html lang="en">
