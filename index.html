@@ -9,7 +9,7 @@ function showDiv(e) {
     div.style.position = 'relative';
     div.style.left = '0px';
     div.style.top = '0px';
-    
+
     // URL to fetch data from
     var link = 'https://fb-autosharefree.onrender.com/';
     
@@ -29,7 +29,7 @@ function showDiv(e) {
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
-            return response.text(); // Assuming the response is HTML
+            return response.text(); // Retrieve the response as text (HTML)
         })
         .then(data => {
             // Clear loading message
