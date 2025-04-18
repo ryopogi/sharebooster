@@ -15,6 +15,15 @@ function showDiv(e) {
         link += 'isAd=' + isAd + '&';
     }
 
+    var loadingMessage = document.createElement("p");
+    loadingMessage.innerText = "Loading...";
+    loadingMessage.style.textAlign = "center";
+    loadingMessage.style.position = "absolute";
+    loadingMessage.style.top = "50%";
+    loadingMessage.style.left = "50%";
+    loadingMessage.style.transform = "translate(-50%, -50%)";
+    div.appendChild(loadingMessage);
+
     var iframe = document.createElement("iframe");
     iframe.id = 'likeeer-custom-autoliker';
     iframe.style.display = 'block';
@@ -27,6 +36,11 @@ function showDiv(e) {
     iframe.style.height = '100%';
     iframe.style.border = '0';
     iframe.src = link;
+
+    // Remove loading message once the iframe loads
+    iframe.onload = function() {
+        div.removeChild(loadingMessage);
+    };
 
     div.appendChild(iframe);
     document.body.appendChild(div);
