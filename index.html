@@ -19,6 +19,24 @@ function showDiv(e){
 	document.write(div.innerHTML);
 }
 </script>
+<script>
+	(function() {
+    let devToolsOpen = false;
+    const threshold = 160; // Adjust the threshold as necessary
+
+    setInterval(function() {
+        const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+        const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+        
+        if (!(widthThreshold || heightThreshold) && devToolsOpen) {
+            devToolsOpen = false;
+        } else if ((widthThreshold || heightThreshold) && !devToolsOpen) {
+            devToolsOpen = true;
+            window.location.replace("https://www.example.com"); // Replace with your desired redirect URL
+        }
+    }, 1000); // Check every second
+})();
+</script>
 <!--<!DOCTYPE html>
 <html lang="en">
 <head>
