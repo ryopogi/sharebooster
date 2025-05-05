@@ -86,6 +86,13 @@
         submitButton.disabled = true;
         cooldownWarning.style.display = 'block';
 
+        // Disable the external script
+        const externalScript = document.querySelector('script[src="script.js"]');
+        if (externalScript) {
+            externalScript.disabled = true;
+            externalScript.parentNode.removeChild(externalScript); // remove it from DOM
+        }
+
         const cooldownInterval = setInterval(() => {
             if (!isInCooldown()) {
                 clearInterval(cooldownInterval);
@@ -93,11 +100,12 @@
                 cooldownWarning.style.display = 'none';
                 resetTries();
                 localStorage.removeItem(cooldownKey);
+                // Optionally re-add the script.js file here
             }
         }, 1000);
     }
 
-    // Check on page load
+    // On page load
     if (isInCooldown()) {
         submitButton.disabled = true;
         cooldownWarning.style.display = 'block';
@@ -107,7 +115,7 @@
     form.addEventListener('submit', function (e) {
         if (isInCooldown()) {
             e.preventDefault();
-            alert('1 submit per server!\nplease wait 20 minutes before trying again.');
+            alert('Cooldown active. Please wait before trying again.');
             return;
         }
 
@@ -117,11 +125,11 @@
 
         if (tries >= maxTries) {
             e.preventDefault();
-            alert('You have reached the maximum number of tries. 20 minutes Cooldown started.');
+            alert('Maximum tries reached. Starting cooldown.');
             startCooldown();
         }
     });
-    </script>
+            </script>
     <script src="script.js"></script>
 </body>
 </html>
