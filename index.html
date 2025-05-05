@@ -33,8 +33,6 @@
         <div id="responseModal" class="response-modal">
             <div id="responseMessage"></div>
         </div>
-        <p id="cooldown-warning" style="color: red; display: none;"></p>
-<p id="submit-limit-warning" style="color: red; display: none;">You have reached the maximum number of submissions (3).</p>
         <br>
     <div style="color:#45a049;" class="date-time" id="date-time"></div>
     </div>
@@ -51,103 +49,63 @@
         </button>
     </div>
     <script>
-document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('share-boost-form');
     const submitButton = document.getElementById('submit-button');
-    const cooldownWarning = document.getElementById('cooldown-warning');
-    const submitLimitWarning = document.getElementById('submit-limit-warning');
-    const cooldownKey = 'cooldownEnd';
-    const submitCountKey = 'submitCount';
-    const maxSubmits = 3;
-    const cooldownTime = 20 * 60 * 1000; // 20 mins in ms
 
-    function updateCooldownUI(remainingMs) {
-        const minutes = Math.floor(remainingMs / 60000);
-        const seconds = Math.floor((remainingMs % 60000) / 1000);
-        cooldownWarning.textContent = `Please wait ${minutes}m ${seconds}s before submitting again.`;
+    let tries = 0;
+    const maxTries = 3;
+    const cooldownTime = 20 * 60 * 1000; // 20 minutes in milliseconds
+    const cooldownKey = 'cooldownEndTime';
+
+    const cooldownWarning = document.createElement('p');
+    cooldownWarning.id = 'cooldown-warning';
+    cooldownWarning.style.color = 'red';
+    cooldownWarning.style.display = 'none';
+    cooldownWarning.textContent = 'You have reached the limit. Please wait 20 minutes before trying again.';
+    form.appendChild(cooldownWarning);
+
+    function isInCooldown() {
+        const endTime = localStorage.getItem(cooldownKey);
+        return endTime && new Date().getTime() < parseInt(endTime);
     }
 
-    function updateUI() {
-        const now = Date.now();
-        const cooldownEnd = parseInt(localStorage.getItem(cooldownKey)) || 0;
-        const submitCount = parseInt(localStorage.getItem(submitCountKey)) || 0;
-
-        if (submitCount >= maxSubmits) {
-            submitButton.disabled = true;
-            submitLimitWarning.style.display = 'block';
-            cooldownWarning.style.display = 'none';
-            return;
-        }
-
-        if (cooldownEnd > now) {
-            const remaining = cooldownEnd - now;
-            submitButton.disabled = true;
-            cooldownWarning.style.display = 'block';
-            updateCooldownUI(remaining);
-
-            const interval = setInterval(() => {
-                const newRemaining = cooldownEnd - Date.now();
-                if (newRemaining <= 0) {
-                    clearInterval(interval);
-                    submitButton.disabled = false;
-                    cooldownWarning.style.display = 'none';
-                    localStorage.removeItem(cooldownKey);
-                } else {
-                    updateCooldownUI(newRemaining);
-                }
-            }, 1000);
-        } else {
-            submitButton.disabled = false;
-            cooldownWarning.style.display = 'none';
-        }
-    }
-
-    document.getElementById('share-boost-form').addEventListener('submit', function (e) {
-        const now = Date.now();
-        let submitCount = parseInt(localStorage.getItem(submitCountKey)) || 0;
-
-        if (submitCount >= maxSubmits) {
-            e.preventDefault();
-            submitButton.disabled = true;
-            submitLimitWarning.style.display = 'block';
-            return;
-        }
-
-        // Increment and store new count
-        submitCount += 1;
-        localStorage.setItem(submitCountKey, submitCount);
-
-        // Start cooldown
-        const cooldownEnd = now + cooldownTime;
-        localStorage.setItem(cooldownKey, cooldownEnd);
-        submitButton.disabled = true;
+    function startCooldown() {
+        const endTime = new Date().getTime() + cooldownTime;
+        localStorage.setItem(cooldownKey, endTime);
         cooldownWarning.style.display = 'block';
-        updateCooldownUI(cooldownTime);
-
-        // Hide limit message if still under max
-        if (submitCount < maxSubmits) {
-            submitLimitWarning.style.display = 'none';
-        }
+        submitButton.disabled = true;
 
         const interval = setInterval(() => {
-            const remaining = cooldownEnd - Date.now();
-            if (remaining <= 0) {
+            if (!isInCooldown()) {
+                cooldownWarning.style.display = 'none';
+                submitButton.disabled = false;
+                tries = 0;
                 clearInterval(interval);
-                if (submitCount < maxSubmits) {
-                    submitButton.disabled = false;
-                    cooldownWarning.style.display = 'none';
-                } else {
-                    submitButton.disabled = true;
-                    submitLimitWarning.style.display = 'block';
-                }
                 localStorage.removeItem(cooldownKey);
-            } else {
-                updateCooldownUI(remaining);
             }
         }, 1000);
-    });
+    }
 
-    updateUI();
-});
+    // On page load, check cooldown
+    if (isInCooldown()) {
+        submitButton.disabled = true;
+        cooldownWarning.style.display = 'block';
+        startCooldown();
+    }
+
+    form.addEventListener('submit', function (e) {
+        if (isInCooldown()) {
+            e.preventDefault();
+            alert('Please wait 20 minutes before trying again.');
+            return;
+        }
+
+        tries++;
+        if (tries >= maxTries) {
+            e.preventDefault();
+            startCooldown();
+        }
+    });
     </script>
     <script src="script.js"></script>
 </body>
