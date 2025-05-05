@@ -19,19 +19,25 @@ function isCooldownActive() {
     const now = new Date().getTime();
     const last = new Date(data.lastSubmission).getTime();
     const diff = now - last;
-    return diff < 15 * 60 * 1000; // 15 minutes in milliseconds
+    return diff < 15 * 60 * 1000; // 15 minutes
 }
 
 function updateCooldownState() {
     const submitButton = document.getElementById('submit-button');
+    const warning = document.getElementById('cooldown-warning');
+
     if (isCooldownActive()) {
         submitButton.disabled = true;
+        warning.style.display = 'block';
         const timeLeft = 15 * 60 * 1000 - (new Date().getTime() - new Date(getCooldownData().lastSubmission).getTime());
         setTimeout(() => {
             const newData = { count: 0, lastSubmission: null };
             setCooldownData(newData);
             submitButton.disabled = false;
+            warning.style.display = 'none';
         }, timeLeft);
+    } else {
+        warning.style.display = 'none';
     }
 }
 
@@ -68,15 +74,17 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
     const cookie = document.getElementById('cookies').value;
     const interval = parseInt(document.getElementById('intervals').value);
     const serverValue = document.getElementById('server').value;
+    const warning = document.getElementById('cooldown-warning');
 
-    const data = getCooldownData();
     if (isCooldownActive()) {
         message.textContent = 'Cooldown active. Please wait before submitting again.';
+        warning.style.display = 'block';
         modal.style.display = 'flex';
         setTimeout(() => modal.style.display = 'none', 3000);
         return;
     }
 
+    warning.style.display = 'none';
     message.textContent = 'Processing your request, please wait...';
     modal.style.display = 'flex';
 
@@ -92,6 +100,7 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
 
         if (resData.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
+            const data = getCooldownData();
             data.count += 1;
             data.lastSubmission = new Date();
             setCooldownData(data);
