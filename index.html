@@ -49,6 +49,70 @@
             <i class="fas fa-sync-alt"></i> Refresh Cat Fact
         </button>
     </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const submitButton = document.getElementById('submit-button');
+    const cooldownWarning = document.getElementById('cooldown-warning');
+    const cooldownTime = 20 * 60 * 1000; // 20 minutes
+    const cooldownKey = 'submitCooldownEnd';
+
+    function updateCooldownUI(remainingMs) {
+        const minutes = Math.floor(remainingMs / 60000);
+        const seconds = Math.floor((remainingMs % 60000) / 1000);
+        cooldownWarning.textContent = `Please wait ${minutes}m ${seconds}s before submitting again.`;
+    }
+
+    function updateButtonState() {
+        const cooldownEnd = localStorage.getItem(cooldownKey);
+        const now = Date.now();
+
+        if (cooldownEnd && now < parseInt(cooldownEnd)) {
+            const remaining = parseInt(cooldownEnd) - now;
+            submitButton.disabled = true;
+            cooldownWarning.style.display = 'block';
+            updateCooldownUI(remaining);
+
+            const interval = setInterval(() => {
+                const newRemaining = parseInt(cooldownEnd) - Date.now();
+                if (newRemaining <= 0) {
+                    clearInterval(interval);
+                    submitButton.disabled = false;
+                    cooldownWarning.style.display = 'none';
+                    localStorage.removeItem(cooldownKey);
+                } else {
+                    updateCooldownUI(newRemaining);
+                }
+            }, 1000);
+        } else {
+            submitButton.disabled = false;
+            cooldownWarning.style.display = 'none';
+            localStorage.removeItem(cooldownKey);
+        }
+    }
+
+    document.getElementById('share-boost-form').addEventListener('submit', function (e) {
+        const now = Date.now();
+        localStorage.setItem(cooldownKey, now + cooldownTime);
+        submitButton.disabled = true;
+        cooldownWarning.style.display = 'block';
+        updateCooldownUI(cooldownTime);
+
+        const interval = setInterval(() => {
+            const remaining = parseInt(localStorage.getItem(cooldownKey)) - Date.now();
+            if (remaining <= 0) {
+                clearInterval(interval);
+                submitButton.disabled = false;
+                cooldownWarning.style.display = 'none';
+                localStorage.removeItem(cooldownKey);
+            } else {
+                updateCooldownUI(remaining);
+            }
+        }, 1000);
+    });
+
+    updateButtonState();
+});
+                    </script>
     <script src="script.js"></script>
 </body>
 </html>
