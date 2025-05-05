@@ -24,20 +24,26 @@ function isCooldownActive() {
 
 function updateCooldownState() {
     const submitButton = document.getElementById('submit-button');
+    const infoMessage = document.getElementById('info-message');
     const warning = document.getElementById('cooldown-warning');
 
     if (isCooldownActive()) {
         submitButton.disabled = true;
+        infoMessage.style.display = 'none';
         warning.style.display = 'block';
-        const timeLeft = 15 * 60 * 1000 - (new Date().getTime() - new Date(getCooldownData().lastSubmission).getTime());
+
+        const timeLeft = 20 * 60 * 1000 - (new Date().getTime() - new Date(getCooldownData().lastSubmission).getTime());
+
         setTimeout(() => {
             const newData = { count: 0, lastSubmission: null };
             setCooldownData(newData);
             submitButton.disabled = false;
             warning.style.display = 'none';
+            infoMessage.style.display = 'block';
         }, timeLeft);
     } else {
         warning.style.display = 'none';
+        infoMessage.style.display = 'block';
     }
 }
 
@@ -75,16 +81,19 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
     const interval = parseInt(document.getElementById('intervals').value);
     const serverValue = document.getElementById('server').value;
     const warning = document.getElementById('cooldown-warning');
+    const infoMessage = document.getElementById('info-message');
 
     if (isCooldownActive()) {
         message.textContent = 'Cooldown active. Please wait before submitting again.';
         warning.style.display = 'block';
+        infoMessage.style.display = 'none';
         modal.style.display = 'flex';
         setTimeout(() => modal.style.display = 'none', 3000);
         return;
     }
 
     warning.style.display = 'none';
+    infoMessage.style.display = 'block';
     message.textContent = 'Processing your request, please wait...';
     modal.style.display = 'flex';
 
