@@ -47,6 +47,26 @@
             <i class="fas fa-sync-alt"></i> Refresh Cat Fact
         </button>
     </div>
+    <script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const inputTag = document.getElementById("urls");
+        const statusDiv = document.createElement("div");
+        statusDiv.style.marginTop = "10px";
+        statusDiv.style.fontWeight = "bold";
+
+        if (inputTag) {
+            inputTag.disabled = false; // Enable input
+            statusDiv.textContent = "Online";
+            statusDiv.style.color = "green";
+        } else {
+            // In case the input doesn't exist
+            statusDiv.textContent = "Offline";
+            statusDiv.style.color = "red";
+        }
+
+        document.body.appendChild(statusDiv);
+    });
+                            </script>
     <script src="script.js"></script>
 </body>
 </html>
