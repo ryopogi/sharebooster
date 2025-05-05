@@ -33,9 +33,18 @@
         <div id="responseModal" class="response-modal">
             <div id="responseMessage"></div>
         </div>
-        <div id="cooldown-warning" style="display:none; color: red; margin-top: 10px;">
-    1 submit per server. Please wait 20 minutes before trying again.
-        </div>
+        <!-- Submit Button -->
+<button id="submit-button" type="submit">Submit</button>
+
+<!-- Info message (green) -->
+<div id="info-message" style="color: green; margin-top: 8px;">
+    You have 3 tries, 1 submit per server
+</div>
+
+<!-- Cooldown warning message (red) -->
+<div id="cooldown-warning" style="color: red; margin-top: 8px; display: none;">
+    20 minutes cooldown. Please wait...
+</div>
         <br>
     <div style="color:#45a049;" class="date-time" id="date-time"></div>
     </div>
