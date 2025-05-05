@@ -66,7 +66,7 @@ function updateDateTime() {
     const now = new Date();
     const options = { timeZone: 'Asia/Manila', hour12: false };
     const dateString = now.toLocaleString('en-US', options);
-    dateTimeElement.textContent = `Current Time (GMT+8): ${dateString}`;
+    dateTimeElement.textContent = `Date/Time : ${dateString}`;
 }
 
 function toggleDarkMode() {
