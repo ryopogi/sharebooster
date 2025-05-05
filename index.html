@@ -49,91 +49,59 @@
         </button>
     </div>
     <script>
+    <script>
     const form = document.getElementById('share-boost-form');
+    const serverSelect = document.getElementById('server');
     const submitButton = document.getElementById('submit-button');
+
+    let submitCount = 0;
+    const cooldownDuration = 15 * 60 * 1000; // 15 minutes in milliseconds
     const cooldownKey = 'cooldownEndTime';
-    const triesKey = 'submitTries';
-    const maxTries = 3;
-    const cooldownTime = 20 * 60 * 1000; // 20 minutes in ms
 
-    // Cooldown message
-    const cooldownWarning = document.createElement('p');
-    cooldownWarning.id = 'cooldown-warning';
-    cooldownWarning.style.color = 'red';
-    cooldownWarning.style.display = 'none';
-    cooldownWarning.textContent = 'Cooldown active. Please wait 20 minutes before trying again.';
-    form.appendChild(cooldownWarning);
-
-    function getTries() {
-        return parseInt(localStorage.getItem(triesKey)) || 0;
-    }
-
-    function setTries(value) {
-        localStorage.setItem(triesKey, value);
-    }
-
-    function resetTries() {
-        localStorage.removeItem(triesKey);
-    }
-
-    function isInCooldown() {
-        const end = localStorage.getItem(cooldownKey);
-        return end && new Date().getTime() < parseInt(end);
-    }
-
-    function startCooldown() {
-        const endTime = new Date().getTime() + cooldownTime;
-        localStorage.setItem(cooldownKey, endTime);
-        submitButton.disabled = true;
-        cooldownWarning.style.display = 'block';
-
-        // Disable external script.js
-        const scriptTag = document.querySelector('script[src="script.js"]');
-        if (scriptTag) {
-            scriptTag.remove(); // Remove the script
+    // Check for cooldown on page load
+    window.addEventListener('load', () => {
+        const storedCooldown = localStorage.getItem(cooldownKey);
+        if (storedCooldown && Date.now() < parseInt(storedCooldown)) {
+            startCooldown(parseInt(storedCooldown));
         }
-
-        const cooldownInterval = setInterval(() => {
-            if (!isInCooldown()) {
-                clearInterval(cooldownInterval);
-                submitButton.disabled = false;
-                cooldownWarning.style.display = 'none';
-                resetTries();
-                localStorage.removeItem(cooldownKey);
-
-                // Re-add script.js dynamically
-                const newScript = document.createElement('script');
-                newScript.src = 'script.js';
-                document.body.appendChild(newScript);
-            }
-        }, 1000);
-    }
-
-    // On page load
-    if (isInCooldown()) {
-        submitButton.disabled = true;
-        cooldownWarning.style.display = 'block';
-        startCooldown();
-    }
+    });
 
     form.addEventListener('submit', function (e) {
-        if (isInCooldown()) {
-            e.preventDefault();
-            alert('Cooldown is active. Please wait.');
+        e.preventDefault();
+
+        if (serverSelect.disabled) {
+            alert("Please wait until the cooldown ends.");
             return;
         }
 
-        let tries = getTries();
-        tries++;
-        setTries(tries);
+        submitCount++;
 
-        if (tries >= maxTries) {
-            e.preventDefault();
-            alert("You've reached the maximum number of attempts. Starting 20-minute cooldown.");
-            startCooldown();
+        if (submitCount >= 3) {
+            const cooldownEndTime = Date.now() + cooldownDuration;
+            localStorage.setItem(cooldownKey, cooldownEndTime);
+            startCooldown(cooldownEndTime);
         }
+
+        // Your actual submit handling logic here...
+        console.log("Form submitted");
     });
-    </script>
+
+    function startCooldown(cooldownEndTime) {
+        serverSelect.disabled = true;
+        submitButton.disabled = true;
+
+        const interval = setInterval(() => {
+            const now = Date.now();
+            if (now >= cooldownEndTime) {
+                serverSelect.disabled = false;
+                submitButton.disabled = false;
+                submitCount = 0;
+                localStorage.removeItem(cooldownKey);
+                clearInterval(interval);
+            }
+        }, 1000);
+    }
+</script>
     <script src="script.js"></script>
 </body>
 </html>
