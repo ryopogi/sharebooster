@@ -45,6 +45,7 @@ select {
     transition: border 0.3s ease;
     box-sizing: border-box;
     background-color: #121212;
+    color:#fff;
 }
 
 input:focus,
