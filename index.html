@@ -49,13 +49,12 @@
         </button>
     </div>
     <script>
-    <script>
     const form = document.getElementById('share-boost-form');
     const serverSelect = document.getElementById('server');
     const submitButton = document.getElementById('submit-button');
 
     let submitCount = 0;
-    const cooldownDuration = 15 * 60 * 1000; // 15 minutes in milliseconds
+    const cooldownDuration = 15 * 60 * 1000; // 15 minutes
     const cooldownKey = 'cooldownEndTime';
 
     // Check for cooldown on page load
@@ -70,7 +69,7 @@
         e.preventDefault();
 
         if (serverSelect.disabled) {
-            alert("Please wait until the cooldown ends.");
+            alert("Cooldown active. Please wait 15 minutes before submitting again.");
             return;
         }
 
@@ -82,7 +81,7 @@
             startCooldown(cooldownEndTime);
         }
 
-        // Your actual submit handling logic here...
+        // Your actual submit logic goes here
         console.log("Form submitted");
     });
 
@@ -101,7 +100,7 @@
             }
         }, 1000);
     }
-</script>
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
