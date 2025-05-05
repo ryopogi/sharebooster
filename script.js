@@ -19,7 +19,7 @@ function isCooldownActive() {
     const now = new Date().getTime();
     const last = new Date(data.lastSubmission).getTime();
     const diff = now - last;
-    return diff < 15 * 60 * 1000; // 15 minutes
+    return diff < 20 * 60 * 1000; // 20 minutes
 }
 
 function updateCooldownState() {
