@@ -47,6 +47,31 @@
             <i class="fas fa-sync-alt"></i> Refresh Cat Fact
         </button>
     </div>
+    <script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const selectTag = document.getElementById("server");
+        const statusDiv = document.createElement("div");
+        statusDiv.style.marginTop = "10px";
+        statusDiv.style.fontWeight = "bold";
+
+        let selectAvailable = false;
+
+        if (selectTag) {
+            selectTag.disabled = false; // Enable the select
+            selectAvailable = true;
+            statusDiv.textContent = "Online";
+            statusDiv.style.color = "green";
+        } else {
+            selectAvailable = false;
+            statusDiv.textContent = "Offline";
+            statusDiv.style.color = "red";
+        }
+
+        document.body.appendChild(statusDiv);
+
+        console.log("Select Available:", selectAvailable); // For debugging
+    });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
