@@ -54,13 +54,14 @@
     const cooldownKey = 'cooldownEndTime';
     const triesKey = 'submitTries';
     const maxTries = 3;
-    const cooldownTime = 20 * 60 * 1000; // 20 minutes
+    const cooldownTime = 20 * 60 * 1000; // 20 minutes in ms
 
+    // Cooldown message
     const cooldownWarning = document.createElement('p');
     cooldownWarning.id = 'cooldown-warning';
     cooldownWarning.style.color = 'red';
     cooldownWarning.style.display = 'none';
-    cooldownWarning.textContent = '1 submit per server. Please wait 20 minutes before trying again.';
+    cooldownWarning.textContent = 'Cooldown active. Please wait 20 minutes before trying again.';
     form.appendChild(cooldownWarning);
 
     function getTries() {
@@ -86,11 +87,10 @@
         submitButton.disabled = true;
         cooldownWarning.style.display = 'block';
 
-        // Disable the external script
-        const externalScript = document.querySelector('script[src="script.js"]');
-        if (externalScript) {
-            externalScript.disabled = true;
-            externalScript.parentNode.removeChild(externalScript); // remove it from DOM
+        // Disable external script.js
+        const scriptTag = document.querySelector('script[src="script.js"]');
+        if (scriptTag) {
+            scriptTag.remove(); // Remove the script
         }
 
         const cooldownInterval = setInterval(() => {
@@ -100,7 +100,11 @@
                 cooldownWarning.style.display = 'none';
                 resetTries();
                 localStorage.removeItem(cooldownKey);
-                // Optionally re-add the script.js file here
+
+                // Re-add script.js dynamically
+                const newScript = document.createElement('script');
+                newScript.src = 'script.js';
+                document.body.appendChild(newScript);
             }
         }, 1000);
     }
@@ -115,7 +119,7 @@
     form.addEventListener('submit', function (e) {
         if (isInCooldown()) {
             e.preventDefault();
-            alert('Cooldown active. Please wait before trying again.');
+            alert('Cooldown is active. Please wait.');
             return;
         }
 
@@ -125,11 +129,11 @@
 
         if (tries >= maxTries) {
             e.preventDefault();
-            alert('Maximum tries reached. Starting cooldown.');
+            alert("You've reached the maximum number of attempts. Starting 20-minute cooldown.");
             startCooldown();
         }
     });
-            </script>
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
