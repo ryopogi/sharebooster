@@ -48,59 +48,6 @@
             <i class="fas fa-sync-alt"></i> Refresh Cat Fact
         </button>
     </div>
-    <script>
-    const form = document.getElementById('share-boost-form');
-    const serverSelect = document.getElementById('server');
-    const submitButton = document.getElementById('submit-button');
-
-    let submitCount = 0;
-    const cooldownDuration = 15 * 60 * 1000; // 15 minutes
-    const cooldownKey = 'cooldownEndTime';
-
-    // Check for cooldown on page load
-    window.addEventListener('load', () => {
-        const storedCooldown = localStorage.getItem(cooldownKey);
-        if (storedCooldown && Date.now() < parseInt(storedCooldown)) {
-            startCooldown(parseInt(storedCooldown));
-        }
-    });
-
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        if (serverSelect.disabled) {
-            alert("Cooldown active. Please wait 15 minutes before submitting again.");
-            return;
-        }
-
-        submitCount++;
-
-        if (submitCount >= 3) {
-            const cooldownEndTime = Date.now() + cooldownDuration;
-            localStorage.setItem(cooldownKey, cooldownEndTime);
-            startCooldown(cooldownEndTime);
-        }
-
-        // Your actual submit logic goes here
-        console.log("Form submitted");
-    });
-
-    function startCooldown(cooldownEndTime) {
-        serverSelect.disabled = true;
-        submitButton.disabled = true;
-
-        const interval = setInterval(() => {
-            const now = Date.now();
-            if (now >= cooldownEndTime) {
-                serverSelect.disabled = false;
-                submitButton.disabled = false;
-                submitCount = 0;
-                localStorage.removeItem(cooldownKey);
-                clearInterval(interval);
-            }
-        }, 1000);
-    }
-    </script>
     <script src="script.js"></script>
 </body>
 </html>
