@@ -64,7 +64,7 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
 function updateDateTime() {
     const dateTimeElement = document.getElementById('date-time');
     const now = new Date();
-    const options = { timeZone: 'Asia/Manila', hour12: false };
+    const options = { timeZone: 'Asia/Manila', hour12: true };
     const dateString = now.toLocaleString('en-US', options);
     dateTimeElement.textContent = `Date/Time : ${dateString}`;
 }
