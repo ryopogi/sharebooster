@@ -51,42 +51,53 @@
     <script>
     const form = document.getElementById('share-boost-form');
     const submitButton = document.getElementById('submit-button');
-
-    let tries = 0;
-    const maxTries = 3;
-    const cooldownTime = 20 * 60 * 1000; // 20 minutes in milliseconds
     const cooldownKey = 'cooldownEndTime';
+    const triesKey = 'submitTries';
+    const maxTries = 3;
+    const cooldownTime = 20 * 60 * 1000; // 20 minutes
 
     const cooldownWarning = document.createElement('p');
     cooldownWarning.id = 'cooldown-warning';
     cooldownWarning.style.color = 'red';
     cooldownWarning.style.display = 'none';
-    cooldownWarning.textContent = 'You have reached the limit. Please wait 20 minutes before trying again.';
+    cooldownWarning.textContent = 'Too many attempts. Please wait 20 minutes before trying again.';
     form.appendChild(cooldownWarning);
 
+    function getTries() {
+        return parseInt(localStorage.getItem(triesKey)) || 0;
+    }
+
+    function setTries(value) {
+        localStorage.setItem(triesKey, value);
+    }
+
+    function resetTries() {
+        localStorage.removeItem(triesKey);
+    }
+
     function isInCooldown() {
-        const endTime = localStorage.getItem(cooldownKey);
-        return endTime && new Date().getTime() < parseInt(endTime);
+        const end = localStorage.getItem(cooldownKey);
+        return end && new Date().getTime() < parseInt(end);
     }
 
     function startCooldown() {
         const endTime = new Date().getTime() + cooldownTime;
         localStorage.setItem(cooldownKey, endTime);
-        cooldownWarning.style.display = 'block';
         submitButton.disabled = true;
+        cooldownWarning.style.display = 'block';
 
-        const interval = setInterval(() => {
+        const cooldownInterval = setInterval(() => {
             if (!isInCooldown()) {
-                cooldownWarning.style.display = 'none';
+                clearInterval(cooldownInterval);
                 submitButton.disabled = false;
-                tries = 0;
-                clearInterval(interval);
+                cooldownWarning.style.display = 'none';
+                resetTries();
                 localStorage.removeItem(cooldownKey);
             }
         }, 1000);
     }
 
-    // On page load, check cooldown
+    // Check on page load
     if (isInCooldown()) {
         submitButton.disabled = true;
         cooldownWarning.style.display = 'block';
@@ -96,13 +107,17 @@
     form.addEventListener('submit', function (e) {
         if (isInCooldown()) {
             e.preventDefault();
-            alert('Please wait 20 minutes before trying again.');
+            alert('1 submit per server!\nplease wait 20 minutes before trying again.');
             return;
         }
 
+        let tries = getTries();
         tries++;
+        setTries(tries);
+
         if (tries >= maxTries) {
             e.preventDefault();
+            alert('You have reached the maximum number of tries. 20 minutes Cooldown started.');
             startCooldown();
         }
     });
