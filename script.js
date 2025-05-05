@@ -4,6 +4,37 @@ const serverUrls = {
     server3: 'https://server3-project502.onrender.com'
 };
 
+function getCooldownData() {
+    const data = localStorage.getItem('submissionData');
+    return data ? JSON.parse(data) : { count: 0, lastSubmission: null };
+}
+
+function setCooldownData(data) {
+    localStorage.setItem('submissionData', JSON.stringify(data));
+}
+
+function isCooldownActive() {
+    const data = getCooldownData();
+    if (data.count < 3) return false;
+    const now = new Date().getTime();
+    const last = new Date(data.lastSubmission).getTime();
+    const diff = now - last;
+    return diff < 15 * 60 * 1000; // 15 minutes in milliseconds
+}
+
+function updateCooldownState() {
+    const submitButton = document.getElementById('submit-button');
+    if (isCooldownActive()) {
+        submitButton.disabled = true;
+        const timeLeft = 15 * 60 * 1000 - (new Date().getTime() - new Date(getCooldownData().lastSubmission).getTime());
+        setTimeout(() => {
+            const newData = { count: 0, lastSubmission: null };
+            setCooldownData(newData);
+            submitButton.disabled = false;
+        }, timeLeft);
+    }
+}
+
 async function checkServerStatus() {
     const servers = document.querySelectorAll('#server option');
     let allDown = true;
@@ -23,7 +54,9 @@ async function checkServerStatus() {
         }
     }
 
-    submitButton.disabled = allDown;
+    if (!isCooldownActive()) {
+        submitButton.disabled = allDown;
+    }
 }
 
 document.getElementById('share-boost-form').onsubmit = async function (event) {
@@ -36,6 +69,14 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
     const interval = parseInt(document.getElementById('intervals').value);
     const serverValue = document.getElementById('server').value;
 
+    const data = getCooldownData();
+    if (isCooldownActive()) {
+        message.textContent = 'Cooldown active. Please wait before submitting again.';
+        modal.style.display = 'flex';
+        setTimeout(() => modal.style.display = 'none', 3000);
+        return;
+    }
+
     message.textContent = 'Processing your request, please wait...';
     modal.style.display = 'flex';
 
@@ -47,12 +88,19 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
             headers: { 'Content-Type': 'application/json' }
         });
 
-        const data = await response.json();
+        const resData = await response.json();
 
-        if (data.status === 200) {
+        if (resData.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
+            data.count += 1;
+            data.lastSubmission = new Date();
+            setCooldownData(data);
+
+            if (data.count >= 3) {
+                updateCooldownState();
+            }
         } else {
-            message.textContent = `Error: ${data.message}`;
+            message.textContent = `Error: ${resData.message}`;
         }
     } catch (error) {
         message.textContent = 'Network error, please try again.';
@@ -97,4 +145,5 @@ window.onload = () => {
     checkServerStatus();
     updateDateTime();
     fetchCatFact();
+    updateCooldownState(); // Check cooldown on page load
 };
