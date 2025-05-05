@@ -39,7 +39,7 @@ select {
     width: 100%;
     padding: 10px;
     margin-bottom: 1rem;
-    border: 2px solid #ddd;
+    border: 2px solid red;
     border-radius: 8px;
     outline: none;
     transition: border 0.3s ease;
