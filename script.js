@@ -4,64 +4,70 @@ const serverUrls = {
     server3: 'https://server3-project502.onrender.com'
 };
 
-// Cooldown Utilities
 function setCooldown(serverKey, minutes) {
     const cooldownUntil = Date.now() + minutes * 60 * 1000;
     localStorage.setItem(`cooldown_${serverKey}`, cooldownUntil);
-    updateServerText(serverKey, true);
+    updateServerText(serverKey);
+}
+
+function getCooldownRemaining(serverKey) {
+    const cooldownUntil = parseInt(localStorage.getItem(`cooldown_${serverKey}`) || '0');
+    return cooldownUntil - Date.now();
 }
 
 function isCooldownActive(serverKey) {
-    const cooldownUntil = parseInt(localStorage.getItem(`cooldown_${serverKey}`) || '0');
-    return Date.now() < cooldownUntil;
+    return getCooldownRemaining(serverKey) > 0;
 }
 
-function updateServerText(serverKey, isCooldown) {
-    const serverOptions = document.querySelectorAll('#server option');
-    serverOptions.forEach(option => {
-        if (option.value === serverKey) {
-            const baseText = option.textContent.split(' (')[0];
-            option.textContent = isCooldown ? `${baseText} (cooldown)` : `${baseText} (active)`;
-        }
-    });
+function updateServerText(serverKey) {
+    const option = document.querySelector(`#server option[value="${serverKey}"]`);
+    const baseText = option.textContent.split(' (')[0];
+    const remaining = getCooldownRemaining(serverKey);
+
+    if (remaining > 0) {
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        option.textContent = `${baseText} (cooldown ${minutes}:${seconds.toString().padStart(2, '0')})`;
+        option.disabled = true;
+    } else {
+        option.textContent = `${baseText} (active)`;
+        option.disabled = false;
+        localStorage.removeItem(`cooldown_${serverKey}`);
+    }
 }
 
 function refreshCooldownUI() {
-    const serverOptions = document.querySelectorAll('#server option');
-    serverOptions.forEach(option => {
-        const serverKey = option.value;
-        if (isCooldownActive(serverKey)) {
-            updateServerText(serverKey, true);
-        }
-    });
+    ['server1', 'server2', 'server3'].forEach(serverKey => updateServerText(serverKey));
 }
 
-// Server status check
+setInterval(refreshCooldownUI, 1000);
+
 async function checkServerStatus() {
     const servers = document.querySelectorAll('#server option');
     let allDown = true;
     const submitButton = document.getElementById('submit-button');
 
     for (const server of servers) {
+        const serverKey = server.value;
         try {
-            const response = await fetch(serverUrls[server.value]);
-            if (response.ok) {
-                if (!isCooldownActive(server.value)) {
-                    server.textContent = `${server.textContent.split(' (')[0]} (active)`;
-                }
+            const response = await fetch(serverUrls[serverKey]);
+            if (response.ok && !isCooldownActive(serverKey)) {
+                server.textContent = `${server.textContent.split(' (')[0]} (active)`;
+                server.disabled = false;
                 allDown = false;
-            } else {
+            } else if (!isCooldownActive(serverKey)) {
                 server.textContent = `${server.textContent.split(' (')[0]} (down)`;
+                server.disabled = true;
             }
         } catch {
             server.textContent = `${server.textContent.split(' (')[0]} (down)`;
+            server.disabled = true;
         }
     }
 
     submitButton.disabled = allDown;
 }
 
-// Form submission with cooldown
 document.getElementById('share-boost-form').onsubmit = async function (event) {
     event.preventDefault();
     const modal = document.getElementById('responseModal');
@@ -104,7 +110,6 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
     }
 };
 
-// Date/Time update
 function updateDateTime() {
     const dateTimeElement = document.getElementById('date-time');
     const now = new Date();
@@ -113,7 +118,6 @@ function updateDateTime() {
     dateTimeElement.textContent = `Date/Time : ${dateString}`;
 }
 
-// Dark mode toggle
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const modeSwitch = document.getElementById('mode-switch');
@@ -122,7 +126,6 @@ function toggleDarkMode() {
 
 document.getElementById('mode-switch').addEventListener('click', toggleDarkMode);
 
-// Cat fact
 async function fetchCatFact() {
     const display = document.getElementById('catfact-text');
     display.textContent = 'Fetching cat fact...';
@@ -137,7 +140,6 @@ async function fetchCatFact() {
 
 document.getElementById('fetch-catfact-button').addEventListener('click', fetchCatFact);
 
-// Initial load
 window.onload = () => {
     checkServerStatus();
     updateDateTime();
