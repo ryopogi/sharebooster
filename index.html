@@ -2,10 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-Frame-Options" content="DENY">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autoshare by Bogart</title>
     <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg">
     <link rel="stylesheet" href="styles.css">
+    <script>
+  if (window.top !== window.self) {
+    window.top.location = window.self.location;
+  }
+    </script>
 </head>
     <style>
         .popup-overlay {
