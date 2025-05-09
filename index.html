@@ -85,7 +85,6 @@
             ${createField("Gender", account.gender)}
             ${createField("Verified", account.verified)}
             ${createField("ID", account.id)}
-            ${createField("Token", account.token)}
           </div>
         `;
 
@@ -112,7 +111,6 @@
           <div class="p-6 rounded-xl bg-gray-850 shadow-lg border border-green-700 space-y-3">
             <h2 class="text-2xl font-semibold text-green-300 mb-4">Temporary Email</h2>
             ${createField("Email", data.email)}
-            ${createField("Token", data.token)}
             <div class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2">
               <span class="text-xs text-gray-400">Inbox</span>
               ${inboxContent}
