@@ -15,8 +15,13 @@ function getCooldownRemaining(serverKey) {
     return cooldownUntil - Date.now();
 }
 
+function isPremiumUser() {
+    const key = document.getElementById('premium-key').value.trim();
+    return key === 'MY_SECRET_PREMIUM_KEY'; // Replace with your actual key
+}
+
 function isCooldownActive(serverKey) {
-    return getCooldownRemaining(serverKey) > 0;
+    return !isPremiumUser() && getCooldownRemaining(serverKey) > 0;
 }
 
 function updateServerText(serverKey) {
@@ -24,7 +29,7 @@ function updateServerText(serverKey) {
     const baseText = option.textContent.split(' (')[0];
     const remaining = getCooldownRemaining(serverKey);
 
-    if (remaining > 0) {
+    if (remaining > 0 && !isPremiumUser()) {
         const minutes = Math.floor(remaining / 60000);
         const seconds = Math.floor((remaining % 60000) / 1000);
         option.textContent = `${baseText} (cooldown ${minutes}:${seconds.toString().padStart(2, '0')})`;
@@ -98,8 +103,10 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
 
         if (data.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
-            const cooldownMinutes = serverValue === 'server1' ? 15 : 20;
-            setCooldown(serverValue, cooldownMinutes);
+            if (!isPremiumUser()) {
+                const cooldownMinutes = serverValue === 'server1' ? 15 : 20;
+                setCooldown(serverValue, cooldownMinutes);
+            }
         } else {
             message.textContent = `Error: ${data.message}`;
         }
@@ -121,7 +128,7 @@ function updateDateTime() {
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const modeSwitch = document.getElementById('mode-switch');
-    modeSwitch.textContent = document.body.classList.contains('dark-mode') ? 'â˜€ï¸' : 'ðŸŒ™';
+    modeSwitch.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
 }
 
 document.getElementById('mode-switch').addEventListener('click', toggleDarkMode);
@@ -145,6 +152,13 @@ window.onload = () => {
     updateDateTime();
     fetchCatFact();
     refreshCooldownUI();
+
+    // Persist premium key across sessions
+    const premiumInput = document.getElementById('premium-key');
+    premiumInput.value = localStorage.getItem('premiumKey') || '';
+    premiumInput.addEventListener('input', () => {
+        localStorage.setItem('premiumKey', premiumInput.value.trim());
+    });
 };
 
 setInterval(updateDateTime, 1000);
