@@ -1,18 +1,18 @@
+
+const encodedKeysByDay = {
+    0: 'S0VZX0JFVExPRw==',    
+    1: 'S0VZX01BS0FOVE9USU4=', 
+    2: 'S0VZX1RBTkdB',         
+    3: 'S0VZX0tVUEFM',         
+    4: 'S0VZX1VMT0w=',         
+    5: 'S0VZX0JVR09L',         
+    6: 'S0VZX05JR0dFUg=='      
+};
+
 const serverUrls = {
     server1: 'https://server1-project502.onrender.com',
     server2: 'https://server2-project502.onrender.com',
     server3: 'https://server3-project502.onrender.com'
-};
-
-// Base64-encoded keys per day (0 = Sunday, ..., 6 = Saturday)
-const encodedKeysByDay = {
-    0: 'S0VZX0JFVExPRw==',
-    1: 'S0VZX01BS0FOVE9USU4=',
-    2: 'S0VZX1RBTkdB',
-    3: 'S0VZX0tVUEFM',
-    4: 'S0VZX1VMT0w=',
-    5: 'S0VZX0JVR09L',
-    6: 'S0VZX05JR0dFUg=='
 };
 
 function decodeBase64(str) {
@@ -29,27 +29,8 @@ function getTodayPremiumKey() {
 }
 
 function isPremiumUser() {
-    const key = document.getElementById('premium-key').value.trim();
-    return key === getTodayPremiumKey() || localStorage.getItem('isPremiumUser') === 'true';
-}
-
-function activatePremium() {
-    const key = document.getElementById('premium-key').value.trim();
-
-    if (key === '') {
-        alert('Please enter your premium key.');
-    } else if (key === getTodayPremiumKey()) {
-        localStorage.setItem('isPremiumUser', 'true');
-
-        ['server1', 'server2', 'server3'].forEach(serverKey => {
-            localStorage.removeItem(`cooldown_${serverKey}`);
-            updateServerText(serverKey);
-        });
-
-        alert('Correct key! Premium activated and cooldowns removed.');
-    } else {
-        alert('Wrong key. Please try again.');
-    }
+    const key = localStorage.getItem('premiumKey') || '';
+    return key === getTodayPremiumKey();
 }
 
 function setCooldown(serverKey, minutes) {
@@ -85,9 +66,8 @@ function updateServerText(serverKey) {
 }
 
 function refreshCooldownUI() {
-    ['server1', 'server2', 'server3'].forEach(serverKey => updateServerText(serverKey));
+    ['server1', 'server2', 'server3'].forEach(updateServerText);
 }
-
 setInterval(refreshCooldownUI, 1000);
 
 async function checkServerStatus() {
@@ -147,7 +127,7 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
         if (data.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
             if (!isPremiumUser()) {
-                setCooldown(serverValue, 1440); // 1 day
+                setCooldown(serverValue, 1440); // 1 day cooldown
             }
         } else {
             message.textContent = `Error: ${data.message}`;
@@ -158,6 +138,23 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
         setTimeout(() => modal.style.display = 'none', 3000);
     }
 };
+
+function activatePremium() {
+    const inputKey = document.getElementById('premium-key').value.trim();
+
+    if (!inputKey) {
+        alert('Please enter your premium key.');
+    } else if (inputKey === getTodayPremiumKey()) {
+        localStorage.setItem('premiumKey', inputKey);
+        ['server1', 'server2', 'server3'].forEach(serverKey => {
+            localStorage.removeItem(`cooldown_${serverKey}`);
+            updateServerText(serverKey);
+        });
+        alert('Correct key! Premium activated and cooldowns removed.');
+    } else {
+        alert('Wrong key. Please try again.');
+    }
+}
 
 function updateDateTime() {
     const dateTimeElement = document.getElementById('date-time');
@@ -199,14 +196,6 @@ window.onload = () => {
     premiumInput.addEventListener('input', () => {
         localStorage.setItem('premiumKey', premiumInput.value.trim());
     });
-
-    // Auto-remove cooldowns if premium is already active
-    if (localStorage.getItem('isPremiumUser') === 'true') {
-        ['server1', 'server2', 'server3'].forEach(serverKey => {
-            localStorage.removeItem(`cooldown_${serverKey}`);
-            updateServerText(serverKey);
-        });
-    }
 };
 
 setInterval(updateDateTime, 1000);
