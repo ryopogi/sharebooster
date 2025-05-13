@@ -17,7 +17,7 @@ function getCooldownRemaining(serverKey) {
 
 function isPremiumUser() {
     const key = document.getElementById('premium-key').value.trim();
-    return key === 'MY_SECRET_PREMIUM_KEY'; // Replace with your actual key
+    return key === 'KEY_MAKANTOTIN'; // Replace with your actual key
 }
 
 function isCooldownActive(serverKey) {
