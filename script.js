@@ -6,13 +6,13 @@ const serverUrls = {
 
 // Base64-encoded keys per day (0 = Sunday, ..., 6 = Saturday)
 const encodedKeysByDay = {
-    0: 'S0VZX0JFVExPRw==',    
-    1: 'S0VZX01BS0FOVE9USU4=', 
-    2: 'S0VZX1RBTkdB',         
-    3: 'S0VZX0tVUEFM',         
-    4: 'S0VZX1VMT0w=',         
-    5: 'S0VZX0JVR09L',         
-    6: 'S0VZX05JR0dFUg=='      
+    0: 'S0VZX0JFVExPRw==',
+    1: 'S0VZX01BS0FOVE9USU4=',
+    2: 'S0VZX1RBTkdB',
+    3: 'S0VZX0tVUEFM',
+    4: 'S0VZX1VMT0w=',
+    5: 'S0VZX0JVR09L',
+    6: 'S0VZX05JR0dFUg=='
 };
 
 function decodeBase64(str) {
@@ -128,7 +128,7 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
         if (data.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
             if (!isPremiumUser()) {
-                setCooldown(serverValue, 1440); // 1 day
+                setCooldown(serverValue, 1440);
             }
         } else {
             message.textContent = `Error: ${data.message}`;
@@ -169,24 +169,6 @@ async function fetchCatFact() {
 
 document.getElementById('fetch-catfact-button').addEventListener('click', fetchCatFact);
 
-// Premium activation logic
-function activatePremium() {
-    const activateBtn = document.querySelector('button[onclick="activatePremium()"]');
-    if (isPremiumUser()) {
-        ['server1', 'server2', 'server3'].forEach(serverKey => {
-            localStorage.removeItem(`cooldown_${serverKey}`);
-            updateServerText(serverKey);
-        });
-        alert('Premium activated! Cooldowns removed.');
-        refreshCooldownUI();
-        activateBtn.disabled = true;
-        activateBtn.textContent = "Premium Active";
-    } else {
-        alert('Invalid premium key.');
-    }
-}
-
-// On page load
 window.onload = () => {
     checkServerStatus();
     updateDateTime();
@@ -203,14 +185,31 @@ window.onload = () => {
     });
 
     if (isPremiumUser()) {
-        const allCooldownsCleared = ['server1', 'server2', 'server3'].every(
-            key => !localStorage.getItem(`cooldown_${key}`)
-        );
-        if (allCooldownsCleared) {
-            activateBtn.disabled = true;
-            activateBtn.textContent = "Premium Active";
-        }
+        activatePremium();
     }
 };
 
 setInterval(updateDateTime, 1000);
+
+// Updated Activate Premium Logic
+function activatePremium() {
+    const keyInput = document.getElementById('premium-key');
+    const activateBtn = document.querySelector('button[onclick="activatePremium()"]');
+
+    if (isPremiumUser()) {
+        ['server1', 'server2', 'server3'].forEach(serverKey => {
+            localStorage.removeItem(`cooldown_${serverKey}`);
+        });
+
+        refreshCooldownUI();
+        checkServerStatus();
+
+        activateBtn.disabled = true;
+        activateBtn.textContent = "Premium Active";
+        keyInput.disabled = true;
+
+        alert('Premium activated! All cooldowns removed.');
+    } else {
+        alert('Invalid premium key. Please check and try again.');
+    }
+}
