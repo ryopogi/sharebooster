@@ -1,1 +1,216 @@
-const _0x450a63=_0x1aae;(function(_0x5d6e43,_0x55c71f){const _0x52a96b=_0x1aae,_0x4a7259=_0x5d6e43();while(!![]){try{const _0x4b2b3c=parseInt(_0x52a96b(0x1f7))/0x1+-parseInt(_0x52a96b(0x206))/0x2*(-parseInt(_0x52a96b(0x21f))/0x3)+-parseInt(_0x52a96b(0x241))/0x4+parseInt(_0x52a96b(0x229))/0x5*(parseInt(_0x52a96b(0x1f4))/0x6)+-parseInt(_0x52a96b(0x234))/0x7+-parseInt(_0x52a96b(0x1f5))/0x8*(-parseInt(_0x52a96b(0x211))/0x9)+-parseInt(_0x52a96b(0x21b))/0xa*(-parseInt(_0x52a96b(0x242))/0xb);if(_0x4b2b3c===_0x55c71f)break;else _0x4a7259['push'](_0x4a7259['shift']());}catch(_0x42b213){_0x4a7259['push'](_0x4a7259['shift']());}}}(_0x318c,0xb48f6));const serverUrls={'server1':_0x450a63(0x21a),'server2':_0x450a63(0x204),'server3':_0x450a63(0x20e)},encodedKeysByDay={0x0:_0x450a63(0x217),0x1:_0x450a63(0x235),0x2:_0x450a63(0x1ee),0x3:_0x450a63(0x22d),0x4:_0x450a63(0x22a),0x5:_0x450a63(0x1f2),0x6:'S0VZX05JR0dFUg=='};function decodeBase64(_0x30e893){try{return atob(_0x30e893);}catch{return'';}}function _0x1aae(_0x50e086,_0x2ae8b5){const _0x318c7f=_0x318c();return _0x1aae=function(_0x1aae2a,_0x3ccf68){_0x1aae2a=_0x1aae2a-0x1ec;let _0xfacb6=_0x318c7f[_0x1aae2a];return _0xfacb6;},_0x1aae(_0x50e086,_0x2ae8b5);}function getTodayPremiumKey(){const _0x193acb=new Date()['getDay']();return decodeBase64(encodedKeysByDay[_0x193acb]);}function isPremiumUser(){const _0x10eb70=_0x450a63,_0x524453=document[_0x10eb70(0x23b)](_0x10eb70(0x210))[_0x10eb70(0x243)][_0x10eb70(0x23a)]();return _0x524453===getTodayPremiumKey();}function setCooldown(_0x24f94d,_0x5433a2){const _0x456122=_0x450a63,_0x5687a5=Date[_0x456122(0x20c)]()+_0x5433a2*0x3c*0x3e8;localStorage[_0x456122(0x1f9)]('cooldown_'+_0x24f94d,_0x5687a5),updateServerText(_0x24f94d);}function getCooldownRemaining(_0x243f76){const _0x21a121=_0x450a63,_0x4918d6=parseInt(localStorage[_0x21a121(0x215)](_0x21a121(0x1f0)+_0x243f76)||'0');return _0x4918d6-Date['now']();}function isCooldownActive(_0x22277e){return!isPremiumUser()&&getCooldownRemaining(_0x22277e)>0x0;}function updateServerText(_0x15d8dd){const _0x2e61c0=_0x450a63,_0x3ae647=document[_0x2e61c0(0x200)](_0x2e61c0(0x212)+_0x15d8dd+'\x22]'),_0xf40f9=_0x3ae647[_0x2e61c0(0x1ec)][_0x2e61c0(0x1fd)]('\x20(')[0x0],_0x54c416=getCooldownRemaining(_0x15d8dd);if(_0x54c416>0x0&&!isPremiumUser()){const _0x5c9911=Math[_0x2e61c0(0x223)](_0x54c416/0xea60),_0x59fe11=Math['floor'](_0x54c416%0xea60/0x3e8);_0x3ae647[_0x2e61c0(0x1ec)]=_0xf40f9+_0x2e61c0(0x213)+_0x5c9911+':'+_0x59fe11[_0x2e61c0(0x1fc)]()[_0x2e61c0(0x222)](0x2,'0')+')',_0x3ae647[_0x2e61c0(0x207)]=!![];}else _0x3ae647[_0x2e61c0(0x1ec)]=_0xf40f9+_0x2e61c0(0x226),_0x3ae647[_0x2e61c0(0x207)]=![],localStorage['removeItem'](_0x2e61c0(0x1f0)+_0x15d8dd);}function refreshCooldownUI(){const _0x2d92ab=_0x450a63;['server1',_0x2d92ab(0x1f6),_0x2d92ab(0x1ff)][_0x2d92ab(0x21e)](_0x112a7d=>updateServerText(_0x112a7d));}setInterval(refreshCooldownUI,0x3e8);async function checkServerStatus(){const _0x290a6e=_0x450a63,_0x5734ba=document[_0x290a6e(0x1f1)](_0x290a6e(0x20f));let _0x3ebe95=!![];const _0x5d6283=document['getElementById'](_0x290a6e(0x22c));for(const _0x4175cb of _0x5734ba){const _0x453c3a=_0x4175cb[_0x290a6e(0x243)];try{const _0x3822e2=await fetch(serverUrls[_0x453c3a]);if(_0x3822e2['ok']&&!isCooldownActive(_0x453c3a))_0x4175cb['textContent']=_0x4175cb[_0x290a6e(0x1ec)][_0x290a6e(0x1fd)]('\x20(')[0x0]+_0x290a6e(0x226),_0x4175cb[_0x290a6e(0x207)]=![],_0x3ebe95=![];else!isCooldownActive(_0x453c3a)&&(_0x4175cb[_0x290a6e(0x1ec)]=_0x4175cb[_0x290a6e(0x1ec)][_0x290a6e(0x1fd)]('\x20(')[0x0]+'\x20(down)',_0x4175cb[_0x290a6e(0x207)]=!![]);}catch{_0x4175cb[_0x290a6e(0x1ec)]=_0x4175cb[_0x290a6e(0x1ec)][_0x290a6e(0x1fd)]('\x20(')[0x0]+'\x20(down)',_0x4175cb[_0x290a6e(0x207)]=!![];}}_0x5d6283[_0x290a6e(0x207)]=_0x3ebe95;}document[_0x450a63(0x23b)](_0x450a63(0x22f))[_0x450a63(0x237)]=async function(_0x322870){const _0x19dc35=_0x450a63;_0x322870[_0x19dc35(0x219)]();const _0x3ce472=document[_0x19dc35(0x23b)](_0x19dc35(0x221)),_0x262597=document[_0x19dc35(0x23b)]('responseMessage'),_0x1474af=document['getElementById']('urls')[_0x19dc35(0x243)],_0x4b481a=parseInt(document[_0x19dc35(0x23b)](_0x19dc35(0x230))[_0x19dc35(0x243)]),_0x4b3386=document[_0x19dc35(0x23b)](_0x19dc35(0x239))[_0x19dc35(0x243)],_0x9be51=parseInt(document[_0x19dc35(0x23b)](_0x19dc35(0x244))[_0x19dc35(0x243)]),_0x10d8ab=document[_0x19dc35(0x23b)](_0x19dc35(0x1fb))[_0x19dc35(0x243)];if(isCooldownActive(_0x10d8ab)){alert(_0x19dc35(0x1ed));return;}_0x262597[_0x19dc35(0x1ec)]=_0x19dc35(0x218),_0x3ce472[_0x19dc35(0x224)][_0x19dc35(0x21d)]='flex';try{const _0xc26029=serverUrls[_0x10d8ab],_0x4f8d93=await fetch(_0xc26029+_0x19dc35(0x205),{'method':_0x19dc35(0x238),'body':JSON[_0x19dc35(0x20b)]({'cookie':_0x4b3386,'url':_0x1474af,'amount':_0x4b481a,'interval':_0x9be51}),'headers':{'Content-Type':_0x19dc35(0x236)}}),_0x4bc747=await _0x4f8d93[_0x19dc35(0x1fa)]();_0x4bc747[_0x19dc35(0x220)]===0xc8?(_0x262597[_0x19dc35(0x1ec)]=_0x19dc35(0x232),!isPremiumUser()&&setCooldown(_0x10d8ab,0x5a0)):_0x262597[_0x19dc35(0x1ec)]=_0x19dc35(0x227)+_0x4bc747['message'];}catch{_0x262597[_0x19dc35(0x1ec)]=_0x19dc35(0x225);}finally{setTimeout(()=>_0x3ce472['style'][_0x19dc35(0x21d)]='none',0xbb8);}};function updateDateTime(){const _0x1dc194=_0x450a63,_0x490017=document[_0x1dc194(0x23b)](_0x1dc194(0x22b)),_0x253994=new Date(),_0x3c177c={'timeZone':_0x1dc194(0x1f3),'hour12':!![]};_0x490017[_0x1dc194(0x1ec)]=_0x1dc194(0x1f8)+_0x253994[_0x1dc194(0x233)](_0x1dc194(0x240),_0x3c177c);}function toggleDarkMode(){const _0x43edd5=_0x450a63;document[_0x43edd5(0x23e)][_0x43edd5(0x20a)]['toggle'](_0x43edd5(0x216));const _0x4dadf4=document[_0x43edd5(0x23b)](_0x43edd5(0x203));_0x4dadf4[_0x43edd5(0x1ec)]=document['body'][_0x43edd5(0x20a)][_0x43edd5(0x214)]('dark-mode')?'☀️':'🌙';}document[_0x450a63(0x23b)](_0x450a63(0x203))['addEventListener'](_0x450a63(0x231),toggleDarkMode);async function fetchCatFact(){const _0x5bcb6a=_0x450a63,_0x44ba1c=document[_0x5bcb6a(0x23b)](_0x5bcb6a(0x228));_0x44ba1c[_0x5bcb6a(0x1ec)]=_0x5bcb6a(0x21c);try{const _0x2887e1=await fetch(_0x5bcb6a(0x23d)),_0x37b5dd=await _0x2887e1[_0x5bcb6a(0x1fa)]();_0x44ba1c[_0x5bcb6a(0x1ec)]=_0x37b5dd[_0x5bcb6a(0x23c)]||'Could\x20not\x20fetch\x20a\x20cat\x20fact.';}catch{_0x44ba1c[_0x5bcb6a(0x1ec)]=_0x5bcb6a(0x208);}}document[_0x450a63(0x23b)](_0x450a63(0x20d))[_0x450a63(0x209)](_0x450a63(0x231),fetchCatFact),window[_0x450a63(0x201)]=()=>{const _0x1b48ec=_0x450a63;checkServerStatus(),updateDateTime(),fetchCatFact(),refreshCooldownUI();const _0xa3fac4=document[_0x1b48ec(0x23b)](_0x1b48ec(0x210));_0xa3fac4[_0x1b48ec(0x243)]=localStorage[_0x1b48ec(0x215)]('premiumKey')||'',_0xa3fac4['addEventListener'](_0x1b48ec(0x1fe),()=>{const _0x5f45a2=_0x1b48ec;localStorage[_0x5f45a2(0x1f9)](_0x5f45a2(0x23f),_0xa3fac4[_0x5f45a2(0x243)]['trim']());});},setInterval(updateDateTime,0x3e8);function _0x318c(){const _0x25455b=['mode-switch','https://server2-project502.onrender.com','/api/submit','802inXiTY','disabled','An\x20error\x20occurred.\x20Please\x20try\x20again.','addEventListener','classList','stringify','now','fetch-catfact-button','https://server3-project502.onrender.com','#server\x20option','premium-key','9PHDEbc','#server\x20option[value=\x22','\x20(cooldown\x20','contains','getItem','dark-mode','S0VZX0JFVExPRw==','Processing\x20your\x20request,\x20please\x20wait...','preventDefault','https://server1-project502.onrender.com','640BHYTLx','Fetching\x20cat\x20fact...','display','forEach','7827HHGAtI','status','responseModal','padStart','floor','style','Network\x20error,\x20please\x20try\x20again.','\x20(active)','Error:\x20','catfact-text','13460mmVOEy','S0VZX1VMT0w=','date-time','submit-button','S0VZX0tVUEFM','Invalid\x20premium\x20key.','share-boost-form','amounts','click','Your\x20request\x20was\x20submitted\x20successfully!','toLocaleString','9268854ECXHQM','S0VZX01BS0FOVE9USU4=','application/json','onsubmit','POST','cookies','trim','getElementById','fact','https://catfact.ninja/fact','body','premiumKey','en-US','2950856FsXdlu','101783cLQWYg','value','intervals','textContent','This\x20server\x20is\x20on\x20cooldown.\x20Please\x20wait\x20before\x20using\x20it\x20again.','S0VZX1RBTkdB','server1','cooldown_','querySelectorAll','S0VZX0JVR09L','Asia/Manila','1206VhsQsz','3638344AfeLOL','server2','167124WAQZTr','Date/Time\x20:\x20','setItem','json','server','toString','split','input','server3','querySelector','onload','removeItem'];_0x318c=function(){return _0x25455b;};return _0x318c();}function activatePremium(){const _0x369070=_0x450a63;isPremiumUser()?([_0x369070(0x1ef),_0x369070(0x1f6),'server3'][_0x369070(0x21e)](_0x4771ad=>{const _0x434f42=_0x369070;localStorage[_0x434f42(0x202)]('cooldown_'+_0x4771ad),updateServerText(_0x4771ad);}),alert('Premium\x20activated!\x20Cooldowns\x20removed.')):alert(_0x369070(0x22e));}
+const serverUrls = {
+    server1: 'https://server1-project502.onrender.com',
+    server2: 'https://server2-project502.onrender.com',
+    server3: 'https://server3-project502.onrender.com'
+};
+
+// Base64-encoded keys per day (0 = Sunday, ..., 6 = Saturday)
+const encodedKeysByDay = {
+    0: 'S0VZX0JFVExPRw==',    
+    1: 'S0VZX01BS0FOVE9USU4=', 
+    2: 'S0VZX1RBTkdB',         
+    3: 'S0VZX0tVUEFM',         
+    4: 'S0VZX1VMT0w=',         
+    5: 'S0VZX0JVR09L',         
+    6: 'S0VZX05JR0dFUg=='      
+};
+
+function decodeBase64(str) {
+    try {
+        return atob(str);
+    } catch {
+        return '';
+    }
+}
+
+function getTodayPremiumKey() {
+    const today = new Date().getDay();
+    return decodeBase64(encodedKeysByDay[today]);
+}
+
+function isPremiumUser() {
+    const key = document.getElementById('premium-key').value.trim();
+    return key === getTodayPremiumKey();
+}
+
+function setCooldown(serverKey, minutes) {
+    const cooldownUntil = Date.now() + minutes * 60 * 1000;
+    localStorage.setItem(`cooldown_${serverKey}`, cooldownUntil);
+    updateServerText(serverKey);
+}
+
+function getCooldownRemaining(serverKey) {
+    const cooldownUntil = parseInt(localStorage.getItem(`cooldown_${serverKey}`) || '0');
+    return cooldownUntil - Date.now();
+}
+
+function isCooldownActive(serverKey) {
+    return !isPremiumUser() && getCooldownRemaining(serverKey) > 0;
+}
+
+function updateServerText(serverKey) {
+    const option = document.querySelector(`#server option[value="${serverKey}"]`);
+    const baseText = option.textContent.split(' (')[0];
+    const remaining = getCooldownRemaining(serverKey);
+
+    if (remaining > 0 && !isPremiumUser()) {
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        option.textContent = `${baseText} (cooldown ${minutes}:${seconds.toString().padStart(2, '0')})`;
+        option.disabled = true;
+    } else {
+        option.textContent = `${baseText} (active)`;
+        option.disabled = false;
+        localStorage.removeItem(`cooldown_${serverKey}`);
+    }
+}
+
+function refreshCooldownUI() {
+    ['server1', 'server2', 'server3'].forEach(serverKey => updateServerText(serverKey));
+}
+
+setInterval(refreshCooldownUI, 1000);
+
+async function checkServerStatus() {
+    const servers = document.querySelectorAll('#server option');
+    let allDown = true;
+    const submitButton = document.getElementById('submit-button');
+
+    for (const server of servers) {
+        const serverKey = server.value;
+        try {
+            const response = await fetch(serverUrls[serverKey]);
+            if (response.ok && !isCooldownActive(serverKey)) {
+                server.textContent = `${server.textContent.split(' (')[0]} (active)`;
+                server.disabled = false;
+                allDown = false;
+            } else if (!isCooldownActive(serverKey)) {
+                server.textContent = `${server.textContent.split(' (')[0]} (down)`;
+                server.disabled = true;
+            }
+        } catch {
+            server.textContent = `${server.textContent.split(' (')[0]} (down)`;
+            server.disabled = true;
+        }
+    }
+
+    submitButton.disabled = allDown;
+}
+
+document.getElementById('share-boost-form').onsubmit = async function (event) {
+    event.preventDefault();
+    const modal = document.getElementById('responseModal');
+    const message = document.getElementById('responseMessage');
+    const url = document.getElementById('urls').value;
+    const amount = parseInt(document.getElementById('amounts').value);
+    const cookie = document.getElementById('cookies').value;
+    const interval = parseInt(document.getElementById('intervals').value);
+    const serverValue = document.getElementById('server').value;
+
+    if (isCooldownActive(serverValue)) {
+        alert(`This server is on cooldown. Please wait before using it again.`);
+        return;
+    }
+
+    message.textContent = 'Processing your request, please wait...';
+    modal.style.display = 'flex';
+
+    try {
+        const server = serverUrls[serverValue];
+        const response = await fetch(`${server}/api/submit`, {
+            method: 'POST',
+            body: JSON.stringify({ cookie, url, amount, interval }),
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await response.json();
+
+        if (data.status === 200) {
+            message.textContent = 'Your request was submitted successfully!';
+            if (!isPremiumUser()) {
+                setCooldown(serverValue, 1440); // 1 day
+            }
+        } else {
+            message.textContent = `Error: ${data.message}`;
+        }
+    } catch {
+        message.textContent = 'Network error, please try again.';
+    } finally {
+        setTimeout(() => modal.style.display = 'none', 3000);
+    }
+};
+
+function updateDateTime() {
+    const dateTimeElement = document.getElementById('date-time');
+    const now = new Date();
+    const options = { timeZone: 'Asia/Manila', hour12: true };
+    dateTimeElement.textContent = `Date/Time : ${now.toLocaleString('en-US', options)}`;
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const modeSwitch = document.getElementById('mode-switch');
+    modeSwitch.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+}
+
+document.getElementById('mode-switch').addEventListener('click', toggleDarkMode);
+
+async function fetchCatFact() {
+    const display = document.getElementById('catfact-text');
+    display.textContent = 'Fetching cat fact...';
+    try {
+        const response = await fetch('https://catfact.ninja/fact');
+        const data = await response.json();
+        display.textContent = data.fact || 'Could not fetch a cat fact.';
+    } catch {
+        display.textContent = 'An error occurred. Please try again.';
+    }
+}
+
+document.getElementById('fetch-catfact-button').addEventListener('click', fetchCatFact);
+
+// Premium activation logic
+function activatePremium() {
+    const activateBtn = document.querySelector('button[onclick="activatePremium()"]');
+    if (isPremiumUser()) {
+        ['server1', 'server2', 'server3'].forEach(serverKey => {
+            localStorage.removeItem(`cooldown_${serverKey}`);
+            updateServerText(serverKey);
+        });
+        alert('Premium activated! Cooldowns removed.');
+        refreshCooldownUI();
+        activateBtn.disabled = true;
+        activateBtn.textContent = "Premium Active";
+    } else {
+        alert('Invalid premium key.');
+    }
+}
+
+// On page load
+window.onload = () => {
+    checkServerStatus();
+    updateDateTime();
+    fetchCatFact();
+    refreshCooldownUI();
+
+    const premiumInput = document.getElementById('premium-key');
+    const activateBtn = document.querySelector('button[onclick="activatePremium()"]');
+
+    premiumInput.value = localStorage.getItem('premiumKey') || '';
+    premiumInput.addEventListener('input', () => {
+        localStorage.setItem('premiumKey', premiumInput.value.trim());
+        refreshCooldownUI();
+    });
+
+    if (isPremiumUser()) {
+        const allCooldownsCleared = ['server1', 'server2', 'server3'].every(
+            key => !localStorage.getItem(`cooldown_${key}`)
+        );
+        if (allCooldownsCleared) {
+            activateBtn.disabled = true;
+            activateBtn.textContent = "Premium Active";
+        }
+    }
+};
+
+setInterval(updateDateTime, 1000);
