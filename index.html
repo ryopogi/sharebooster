@@ -216,7 +216,8 @@ body.dark-mode .btn:hover {
             <label style="display:none; color:#45a049;" for="intervals">DELAY (1):</label>
             <input style="display:none;" type="number" id="intervals" placeholder="Enter Delay" value="1"/>
             <label style="color:#45a049;" for="premium-key">Access Premium Key:</label>
-            <input type="text" id="premium-key" placeholder="Access no server cooldown">
+            <input type="text" id="premium-key" />
+            <button type="button" onclick="activatePremium()">Activate</button>
             <label style="color:#45a049;" for="server">SELECT SERVER:</label>
             <select id="server">
                 <option value="server1">Server 1</option>
