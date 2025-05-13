@@ -183,30 +183,35 @@ window.onload = () => {
     const savedKey = localStorage.getItem('premiumKey') || '';
     premiumInput.value = savedKey;
 
+    // Save the key on input, but do NOT activate
+    premiumInput.addEventListener('input', () => {
+        const trimmedKey = premiumInput.value.trim();
+        localStorage.setItem('premiumKey', trimmedKey);
+    });
+
+    // Lock servers by default if key is not already valid
+    const serverOptions = document.querySelectorAll('#server option');
     if (!isPremiumUser()) {
-        const serverOptions = document.querySelectorAll('#server option');
         serverOptions.forEach(option => {
             option.disabled = true;
             option.textContent = `${option.textContent.split(' (')[0]} (locked)`;
         });
     }
-
-    premiumInput.addEventListener('input', () => {
-        localStorage.setItem('premiumKey', premiumInput.value.trim());
-    });
 };
 
 // MODIFIED activatePremium
 function activatePremium() {
-    if (isPremiumUser()) {
-        ['server1', 'server2', 'server3'].forEach(serverKey => {
-            localStorage.removeItem(`cooldown_${serverKey}`);
-            const option = document.querySelector(`#server option[value="${serverKey}"]`);
-            option.disabled = false;
-            option.textContent = `${option.textContent.split(' (')[0]} (active)`;
-        });
-        alert('Premium activated! Cooldowns removed and servers unlocked.');
-    } else {
+    if (!isPremiumUser()) {
         alert('Invalid premium key.');
+        return;
     }
-}
+
+    ['server1', 'server2', 'server3'].forEach(serverKey => {
+        localStorage.removeItem(`cooldown_${serverKey}`);
+        const option = document.querySelector(`#server option[value="${serverKey}"]`);
+        option.disabled = false;
+        option.textContent = `${option.textContent.split(' (')[0]} (active)`;
+    });
+
+    alert('Premium activated! Cooldowns removed and servers unlocked.');
+        }
