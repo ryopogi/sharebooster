@@ -4,7 +4,7 @@
     'createElement',
     'script',
     'src',
-    'script3\u3164.js', // using invisible Hangul filler (U+3164)
+    'script3\u3164.js', 
     'id',
     'myScript',
     'appendChild',
