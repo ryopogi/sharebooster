@@ -1,12 +1,12 @@
 
 const encodedKeysByDay = {
-    0: 'S0VZX0JFVExPRw==',    
-    1: 'S0VZX01BS0FOVE9USU4=', 
-    2: 'S0VZX1RBTkdB',         
-    3: 'S0VZX0tVUEFM',         
-    4: 'S0VZX1VMT0w=',         
-    5: 'S0VZX0JVR09L',         
-    6: 'S0VZX05JR0dFUg=='      
+    0: 'S0VZX0JFVExPRw==',
+    1: 'S0VZX01BS0FOVE9USU4=',
+    2: 'S0VZX1RBTkdB',
+    3: 'S0VZX0tVUEFM',
+    4: 'S0VZX1VMT0w=',
+    5: 'S0VZX0JVR09L',
+    6: 'S0VZX05JR0dFUg=='
 };
 
 const serverUrls = {
@@ -61,7 +61,9 @@ function updateServerText(serverKey) {
     } else {
         option.textContent = `${baseText} (active)`;
         option.disabled = false;
-        localStorage.removeItem(`cooldown_${serverKey}`);
+        if (!isPremiumUser()) {
+            localStorage.removeItem(`cooldown_${serverKey}`);
+        }
     }
 }
 
@@ -144,7 +146,11 @@ function activatePremium() {
 
     if (!inputKey) {
         alert('Please enter your premium key.');
-    } else if (inputKey === getTodayPremiumKey()) {
+        return;
+    }
+
+    const correctKey = getTodayPremiumKey();
+    if (inputKey === correctKey) {
         localStorage.setItem('premiumKey', inputKey);
         ['server1', 'server2', 'server3'].forEach(serverKey => {
             localStorage.removeItem(`cooldown_${serverKey}`);
@@ -192,10 +198,7 @@ window.onload = () => {
     refreshCooldownUI();
 
     const premiumInput = document.getElementById('premium-key');
-    premiumInput.value = localStorage.getItem('premiumKey') || '';
-    premiumInput.addEventListener('input', () => {
-        localStorage.setItem('premiumKey', premiumInput.value.trim());
-    });
+    premiumInput.value = ''; // Never prefill stored key
 };
 
 setInterval(updateDateTime, 1000);
