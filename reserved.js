@@ -104,7 +104,7 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
         if (data.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
             if (!isPremiumUser()) {
-                const cooldownMinutes = serverValue === 'server1' ? 15 : 20;
+                const cooldownMinutes = 1440; // 1 day cooldown
                 setCooldown(serverValue, cooldownMinutes);
             }
         } else {
@@ -162,3 +162,16 @@ window.onload = () => {
 };
 
 setInterval(updateDateTime, 1000);
+
+// New function to activate premium and remove cooldown
+function activatePremium() {
+    if (isPremiumUser()) {
+        ['server1', 'server2', 'server3'].forEach(serverKey => {
+            localStorage.removeItem(`cooldown_${serverKey}`);
+            updateServerText(serverKey);
+        });
+        alert('Premium activated! Cooldowns have been removed.');
+    } else {
+        alert('Invalid premium key.');
+    }
+              }
