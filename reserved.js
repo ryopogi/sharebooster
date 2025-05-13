@@ -6,13 +6,13 @@ const serverUrls = {
 
 // Base64-encoded keys per day (0 = Sunday, ..., 6 = Saturday)
 const encodedKeysByDay = {
-    0: 'S0VZX0JFVExPRw==',     // Sunday - KEY_BETLOG
-    1: 'S0VZX01BS0FOVE9USU4=', // Monday - KEY_MAKANTOTIN
-    2: 'S0VZX1RBTkdB',         // Tuesday - KEY_TANGA
-    3: 'S0VZX0tVUEFM',         // Wednesday - KEY_KUPAL
-    4: 'S0VZX1VMT0w=',         // Thursday - KEY_ULOL
-    5: 'S0VZX0JVR09L',         // Friday - KEY_BUGOK
-    6: 'S0VZX05JR0dFUg=='      // Saturday - KEY_NIGGER
+    0: 'S0VZX0JFVExPRw==',    
+    1: 'S0VZX01BS0FOVE9USU4=', 
+    2: 'S0VZX1RBTkdB',         
+    3: 'S0VZX0tVUEFM',         
+    4: 'S0VZX1VMT0w=',         
+    5: 'S0VZX0JVR09L',         
+    6: 'S0VZX05JR0dFUg=='      
 };
 
 function decodeBase64(str) {
