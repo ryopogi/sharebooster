@@ -215,9 +215,13 @@ body.dark-mode .btn:hover {
             <input type="number" id="amounts" placeholder="Enter Amount" required />
             <label style="display:none; color:#45a049;" for="intervals">DELAY (1):</label>
             <input style="display:none;" type="number" id="intervals" placeholder="Enter Delay" value="1"/>
-            <label style="color:#45a049;" for="premium-key">Access Premium Key:</label>
-            <button type="button" onclick="activatePremium()">Activate</button>
-            <input type="text" id="premium-key" placeholder="Access No Cooldown Server" />
+            <div style="margin-bottom: 1rem;">
+  <label style="color:#45a049;" for="premium-key">Access Premium Key:</label>
+  <div style="display: flex; gap: 8px; align-items: center;">
+    <input type="text" id="premium-key" placeholder="Access No Cooldown Server" style="flex: 1;" />
+    <button type="button" onclick="activatePremium()" class="btn" style="width: auto; padding: 10px 16px;">Activate</button>
+  </div>
+            </div>
             <label style="color:#45a049;" for="server">SELECT SERVER:</label>
             <select id="server">
                 <option value="server1">Server 1</option>
