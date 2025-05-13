@@ -30,7 +30,26 @@ function getTodayPremiumKey() {
 
 function isPremiumUser() {
     const key = document.getElementById('premium-key').value.trim();
-    return key === getTodayPremiumKey();
+    return key === getTodayPremiumKey() || localStorage.getItem('isPremiumUser') === 'true';
+}
+
+function activatePremium() {
+    const key = document.getElementById('premium-key').value.trim();
+
+    if (key === '') {
+        alert('Please enter your premium key.');
+    } else if (key === getTodayPremiumKey()) {
+        localStorage.setItem('isPremiumUser', 'true');
+
+        ['server1', 'server2', 'server3'].forEach(serverKey => {
+            localStorage.removeItem(`cooldown_${serverKey}`);
+            updateServerText(serverKey);
+        });
+
+        alert('Correct key! Premium activated and cooldowns removed.');
+    } else {
+        alert('Wrong key. Please try again.');
+    }
 }
 
 function setCooldown(serverKey, minutes) {
@@ -128,7 +147,7 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
         if (data.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
             if (!isPremiumUser()) {
-                setCooldown(serverValue, 1440);
+                setCooldown(serverValue, 1440); // 1 day
             }
         } else {
             message.textContent = `Error: ${data.message}`;
@@ -176,40 +195,18 @@ window.onload = () => {
     refreshCooldownUI();
 
     const premiumInput = document.getElementById('premium-key');
-    const activateBtn = document.querySelector('button[onclick="activatePremium()"]');
-
     premiumInput.value = localStorage.getItem('premiumKey') || '';
     premiumInput.addEventListener('input', () => {
         localStorage.setItem('premiumKey', premiumInput.value.trim());
-        refreshCooldownUI();
     });
 
-    if (isPremiumUser()) {
-        activatePremium();
+    // Auto-remove cooldowns if premium is already active
+    if (localStorage.getItem('isPremiumUser') === 'true') {
+        ['server1', 'server2', 'server3'].forEach(serverKey => {
+            localStorage.removeItem(`cooldown_${serverKey}`);
+            updateServerText(serverKey);
+        });
     }
 };
 
 setInterval(updateDateTime, 1000);
-
-// Updated Activate Premium Logic
-function activatePremium() {
-    const keyInput = document.getElementById('premium-key');
-    const activateBtn = document.querySelector('button[onclick="activatePremium()"]');
-
-    if (isPremiumUser()) {
-        ['server1', 'server2', 'server3'].forEach(serverKey => {
-            localStorage.removeItem(`cooldown_${serverKey}`);
-        });
-
-        refreshCooldownUI();
-        checkServerStatus();
-
-        activateBtn.disabled = true;
-        activateBtn.textContent = "Premium Active";
-        keyInput.disabled = true;
-
-        alert('Premium activated! All cooldowns removed.');
-    } else {
-        alert('Invalid premium key. Please check and try again.');
-    }
-}
