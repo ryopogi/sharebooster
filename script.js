@@ -32,6 +32,10 @@ function isPremiumUser() {
     return key === getTodayPremiumKey();
 }
 
+function isPremiumActivated() {
+    return localStorage.getItem('isPremiumActivated') === 'true';
+}
+
 function setCooldown(serverKey, minutes) {
     const cooldownUntil = Date.now() + minutes * 60 * 1000;
     localStorage.setItem(`cooldown_${serverKey}`, cooldownUntil);
@@ -44,7 +48,7 @@ function getCooldownRemaining(serverKey) {
 }
 
 function isCooldownActive(serverKey) {
-    return !isPremiumUser() && getCooldownRemaining(serverKey) > 0;
+    return !isPremiumActivated() && getCooldownRemaining(serverKey) > 0;
 }
 
 function updateServerText(serverKey) {
@@ -52,7 +56,7 @@ function updateServerText(serverKey) {
     const baseText = option.textContent.split(' (')[0];
     const remaining = getCooldownRemaining(serverKey);
 
-    if (!isPremiumUser()) {
+    if (!isPremiumActivated()) {
         option.disabled = true;
         if (remaining > 0) {
             const minutes = Math.floor(remaining / 60000);
@@ -85,7 +89,7 @@ async function checkServerStatus() {
             const response = await fetch(serverUrls[serverKey]);
             if (response.ok && !isCooldownActive(serverKey)) {
                 server.textContent = `${server.textContent.split(' (')[0]} (active)`;
-                server.disabled = !isPremiumUser();
+                server.disabled = !isPremiumActivated();
                 allDown = false;
             } else if (!isCooldownActive(serverKey)) {
                 server.textContent = `${server.textContent.split(' (')[0]} (down)`;
@@ -130,7 +134,7 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
 
         if (data.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
-            if (!isPremiumUser()) {
+            if (!isPremiumActivated()) {
                 setCooldown(serverValue, 1440);
             }
         } else {
@@ -172,7 +176,6 @@ async function fetchCatFact() {
 
 document.getElementById('fetch-catfact-button').addEventListener('click', fetchCatFact);
 
-// MODIFIED window.onload
 window.onload = () => {
     checkServerStatus();
     updateDateTime();
@@ -183,15 +186,12 @@ window.onload = () => {
     const savedKey = localStorage.getItem('premiumKey') || '';
     premiumInput.value = savedKey;
 
-    // Save the key on input, but do NOT activate
     premiumInput.addEventListener('input', () => {
-        const trimmedKey = premiumInput.value.trim();
-        localStorage.setItem('premiumKey', trimmedKey);
+        localStorage.setItem('premiumKey', premiumInput.value.trim());
     });
 
-    // Lock servers by default if key is not already valid
-    const serverOptions = document.querySelectorAll('#server option');
-    if (!isPremiumUser()) {
+    if (!isPremiumActivated()) {
+        const serverOptions = document.querySelectorAll('#server option');
         serverOptions.forEach(option => {
             option.disabled = true;
             option.textContent = `${option.textContent.split(' (')[0]} (locked)`;
@@ -199,12 +199,13 @@ window.onload = () => {
     }
 };
 
-// MODIFIED activatePremium
 function activatePremium() {
     if (!isPremiumUser()) {
         alert('Invalid premium key.');
         return;
     }
+
+    localStorage.setItem('isPremiumActivated', 'true');
 
     ['server1', 'server2', 'server3'].forEach(serverKey => {
         localStorage.removeItem(`cooldown_${serverKey}`);
@@ -214,4 +215,4 @@ function activatePremium() {
     });
 
     alert('Premium activated! Cooldowns removed and servers unlocked.');
-        }
+}
