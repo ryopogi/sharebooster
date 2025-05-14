@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autoshare by Bogart</title>
+  <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    if (window.top !== window.self) {
+      window.top.location = window.self.location;
+    }
+  </script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 95vh;
+      justify-content: center;
+      align-items: center;
+      background-color: #121212;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      background-color: #121212;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 70%;
+      max-width: 320px;
+      position: relative;
+      margin-bottom: 20px;
+      animation: rainbow-border 5s linear infinite;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #4caf50;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1rem;
+      border: 2px solid red;
+      border-radius: 8px;
+      outline: none;
+      transition: border 0.3s ease;
+      box-sizing: border-box;
+      background-color: #121212;
+      color: #fff;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #4caf50;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background-color: red;
+      color: #fff;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    .response-modal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 91.5%;
+      color: green;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 1rem;
+      display: none;
+    }
+
+    @keyframes rainbow-border {
+      0% { border: 3px solid red; }
+      25% { border: 3px solid orange; }
+      50% { border: 3px solid yellow; }
+      75% { border: 3px solid green; }
+      100% { border: 3px solid blue; }
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .popup-content {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-content video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: black;
+    }
+
+    .close-link {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      color: #000;
+      text-decoration: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      text-align: center;
+      line-height: 36px;
+      font-weight: bold;
+      font-size: 22px;
+      z-index: 10001;
+    }
+
+    /* Premium Modal */
+    #premiumPopup {
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 9998;
+    }
+
+    #premiumPopup .popup-content {
+      background: #1e1e1e;
+      flex-direction: column;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 300px;
+      width: 90%;
+    }
+
+    #premiumPopup input {
+      margin-bottom: 10px;
+    }
+
+    #openPremiumPopup {
+      padding: 6px 12px;
+      font-size: 12px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div style="display:none;" class="mode-switch" id="mode-switch">🌙</div>
+    <h3>BERTO SHAREBOOSTER</h3>
+
+    <center>
+      <a href="#" style="font-size: 12px; color:white;" class="open-popup">WATCH FBSTATE UTILITY TUTORIAL</a>
+    </center>
+
+    <!-- Unlock Premium Button (left side) -->
+    <div style="display: flex; justify-content: flex-start; margin-top: 10px;">
+      <button id="openPremiumPopup">Unlock Premium</button>
+    </div>
+
+    <!-- Video Tutorial Popup -->
+    <div class="popup-overlay" id="videoPopup">
+      <div class="popup-content">
+        <a href="#" class="close-link" id="closePopup">&times;</a>
+        <video id="popupVideo" controls autoplay>
+          <source src="tutorial.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Premium Key Popup -->
+    <div class="popup-overlay" id="premiumPopup">
+      <div class="popup-content">
+        <a href="#" class="close-link" id="closePremiumPopup">&times;</a>
+        <label style="color:#45a049;" for="premium-key">Access Premium Key:</label>
+        <input type="text" id="premium-key" placeholder="Enter the key" />
+        <button type="button" onclick="activatePremium()" class="btn">Activate</button>
+      </div>
+    </div>
+<br>
+    <form id="share-boost-form">
+      <label style="color:#45a049;" for="cookies">FBSTATE UTILITY:</label>
+      <input type="text" id="cookies" placeholder="Enter Fbstate" required />
+      <label style="color:#45a049;" for="urls">POST URL:</label>
+      <input type="text" id="urls" placeholder="Enter Link" required />
+      <label style="color:#45a049;" for="amounts">AMOUNT:</label>
+      <input type="number" id="amounts" placeholder="Enter Amount" required />
+      <label style="display:none; color:#45a049;" for="intervals">DELAY (1):</label>
+      <input style="display:none;" type="number" id="intervals" value="1" />
+      <label style="color:#45a049;" for="server">SELECT SERVER:</label>
+      <select id="server">
+        <option value="server1">Server 1</option>
+        <option value="server2">Server 2</option>
+        <option value="server3">Server 3</option>
+      </select>
+      <button type="submit" class="btn" id="submit-button">Submit</button>
+    </form>
+
+    <div id="info-message" style="font-size: 12px; color: green; margin-top: 8px;">
+      Server's Lock! buy the premium key to Unlock the servers!
+    </div>
+
+    <div id="responseModal" class="response-modal">
+      <div id="responseMessage"></div>
+    </div>
+
+    <br>
+    <div style="color:#45a049;" class="date-time" id="date-time"></div>
+  </div>
+
+  <script>
+    const popup = document.getElementById('videoPopup');
+    const openLink = document.querySelector('.open-popup');
+    const closeLink = document.getElementById('closePopup');
+    const video = document.getElementById('popupVideo');
+
+    openLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      popup.style.display = 'flex';
+      video.currentTime = 0;
+      video.play();
+    });
+
+    closeLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      popup.style.display = 'none';
+      video.pause();
+    });
+
+    popup.addEventListener('click', function (e) {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+        video.pause();
+      }
+    });
+
+    // Premium popup logic
+    const premiumPopup = document.getElementById("premiumPopup");
+    const openPremiumPopup = document.getElementById("openPremiumPopup");
+    const closePremiumPopup = document.getElementById("closePremiumPopup");
+
+    openPremiumPopup.addEventListener("click", function (e) {
+      e.preventDefault();
+      premiumPopup.style.display = "flex";
+    });
+
+    closePremiumPopup.addEventListener("click", function (e) {
+      e.preventDefault();
+      premiumPopup.style.display = "none";
+    });
+
+    premiumPopup.addEventListener("click", function (e) {
+      if (e.target === premiumPopup) {
+        premiumPopup.style.display = "none";
+      }
+    });
+
+    function activatePremium() {
+      const key = document.getElementById("premium-key").value;
+      alert("Activating Premium with key: " + key);
+      premiumPopup.style.display = "none";
+    }
+  </script>
+</body>
+</html>
