@@ -57,19 +57,13 @@ function updateServerText(server) {
   const cooldown = getCooldownRemaining(server);
 
   if (!isPremiumActivated()) {
-    if (server === "server1") {
-      if (cooldown > 0) {
-        const min = Math.floor(cooldown / 60000);
-        const sec = Math.floor((cooldown % 60000) / 1000);
-        option.textContent = `${label} (cooldown ${min}:${sec.toString().padStart(2, '0')})`;
-        option.disabled = true;
-      } else {
-        option.textContent = `${label} (available)`;
-        option.disabled = false;
-      }
+    option.disabled = true;
+    if (cooldown > 0) {
+      const min = Math.floor(cooldown / 60000);
+      const sec = Math.floor((cooldown % 60000) / 1000);
+      option.textContent = `${label} (cooldown ${min}:${sec.toString().padStart(2, '0')})`;
     } else {
       option.textContent = `${label} (locked)`;
-      option.disabled = true;
     }
   } else {
     option.disabled = false;
@@ -84,13 +78,12 @@ function refreshCooldownUI() {
 
 function updateStatusText() {
   const infoDiv = document.getElementById("info-message");
-  const activated = isPremiumActivated();
-  console.log("Premium activated?", activated);
-
-  if (activated) {
+  if (isPremiumUser()) {
+    localStorage.setItem("isPremiumActivated", "true");
     infoDiv.innerText = "STATUS : Premium User";
     infoDiv.style.color = "#4caf50";
   } else {
+    localStorage.setItem("isPremiumActivated", "false");
     infoDiv.innerText = "STATUS : Free User";
     infoDiv.style.color = "#ff9800";
   }
@@ -98,21 +91,8 @@ function updateStatusText() {
 
 setInterval(refreshCooldownUI, 1000);
 
-// On key input, check and save premium status
-document.getElementById('premium-key').addEventListener('input', () => {
-  const isValid = isPremiumUser();
-  localStorage.setItem("isPremiumActivated", isValid ? "true" : "false");
-  updateStatusText();
-  refreshCooldownUI();
-});
-
-// On load, ensure default state
+document.getElementById('premium-key').addEventListener('input', updateStatusText);
 document.addEventListener('DOMContentLoaded', () => {
-  const existingStatus = localStorage.getItem("isPremiumActivated");
-  if (existingStatus !== "true" && existingStatus !== "false") {
-    localStorage.setItem("isPremiumActivated", "false");
-  }
-
   updateStatusText();
   refreshCooldownUI();
 });
