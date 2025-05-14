@@ -79,18 +79,18 @@ function refreshCooldownUI() {
 
 function updateStatusMessage() {
     let statusDiv = document.getElementById('status-message');
+
     if (!statusDiv) {
-        statusDiv = document.createElement('div');
-        statusDiv.id = 'status-message';
-        statusDiv.style.color = '#4caf50';
-        statusDiv.style.marginTop = '10px';
-        document.getElementById('share-boost-form').appendChild(statusDiv);
+        console.warn('STATUS MESSAGE: #status-message element not found in DOM.');
+        return;
     }
 
     if (isPremiumActivated()) {
         statusDiv.textContent = 'STATUS: Premium User';
+        statusDiv.style.color = '#4caf50';
     } else if (isCooldownActive('server1')) {
         statusDiv.textContent = 'STATUS: Free User';
+        statusDiv.style.color = '#f39c12';
     } else {
         statusDiv.textContent = '';
     }
