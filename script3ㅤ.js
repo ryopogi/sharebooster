@@ -86,10 +86,10 @@ function updateStatusMessage() {
     }
 
     if (isPremiumActivated()) {
-        statusDiv.textContent = 'STATUS: Premium User';
+        statusDiv.textContent = 'STATUS: PREMIUM USER';
         statusDiv.style.color = '#4caf50';
     } else {
-        statusDiv.textContent = 'STATUS: Free User';
+        statusDiv.textContent = 'STATUS: FREE USER';
         statusDiv.style.color = '#f39c12';
     }
 }
