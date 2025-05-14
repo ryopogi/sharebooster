@@ -1,3 +1,4 @@
+<script>
 const serverUrls = {
     server1: 'https://server1-project502.onrender.com',
     server2: 'https://server2-project502.onrender.com',
@@ -70,10 +71,30 @@ function updateServerText(serverKey) {
         option.textContent = `${baseText} (active)`;
         localStorage.removeItem(`cooldown_${serverKey}`);
     }
+    updateStatusMessage();
 }
 
 function refreshCooldownUI() {
     ['server1', 'server2', 'server3'].forEach(serverKey => updateServerText(serverKey));
+}
+
+function updateStatusMessage() {
+    let statusDiv = document.getElementById('status-message');
+    if (!statusDiv) {
+        statusDiv = document.createElement('div');
+        statusDiv.id = 'status-message';
+        statusDiv.style.color = '#4caf50';
+        statusDiv.style.marginTop = '10px';
+        document.getElementById('share-boost-form').appendChild(statusDiv);
+    }
+
+    if (isPremiumActivated()) {
+        statusDiv.textContent = 'STATUS: Premium User';
+    } else if (isCooldownActive('server1')) {
+        statusDiv.textContent = 'STATUS: Free User';
+    } else {
+        statusDiv.textContent = '';
+    }
 }
 
 setInterval(refreshCooldownUI, 1000);
@@ -162,19 +183,31 @@ function toggleDarkMode() {
 
 document.getElementById('mode-switch').addEventListener('click', toggleDarkMode);
 
-async function fetchCatFact() {
-    const display = document.getElementById('catfact-text');
-    display.textContent = 'Fetching cat fact...';
-    try {
-        const response = await fetch('https://catfact.ninja/fact');
-        const data = await response.json();
-        display.textContent = data.fact || 'Could not fetch a cat fact.';
-    } catch {
-        display.textContent = 'An error occurred. Please try again.';
+function activatePremium() {
+    const key = document.getElementById("premium-key").value.trim();
+    if (key === getTodayPremiumKey()) {
+        alert("Premium activated successfully!");
+        localStorage.setItem('isPremiumActivated', 'true');
+        updateServerText('server1');
+        updateServerText('server2');
+        updateServerText('server3');
+    } else {
+        alert("Invalid premium key.");
     }
+    document.getElementById("premiumPopup").style.display = "none";
+    updateStatusMessage();
 }
 
-document.getElementById('fetch-catfact-button').addEventListener('click', fetchCatFact);
+function fetchCatFact() {
+    const display = document.getElementById('catfact-text');
+    display.textContent = 'Fetching cat fact...';
+    fetch('https://catfact.ninja/fact')
+        .then(res => res.json())
+        .then(data => display.textContent = data.fact || 'Could not fetch a cat fact.')
+        .catch(() => display.textContent = 'An error occurred. Please try again.');
+}
+
+document.getElementById('fetch-catfact-button')?.addEventListener('click', fetchCatFact);
 
 window.onload = () => {
     checkServerStatus();
@@ -190,50 +223,10 @@ window.onload = () => {
         localStorage.setItem('premiumKey', premiumInput.value.trim());
     });
 
-    const infoText = document.getElementById('info-message');
-    infoText.style.fontSize = '1rem';
-    infoText.style.fontWeight = 'bold';
-    infoText.style.textAlign = 'center';
-    infoText.style.margin = '10px 0';
-    infoText.style.transition = 'color 0.3s ease';
-
-    if (!isPremiumActivated()) {
-        infoText.textContent = 'STATUS : Free User';
-        infoText.style.color = '#00d9ff'; // Cool cyan
-        const serverOptions = document.querySelectorAll('#server option');
-        serverOptions.forEach(option => {
-            const value = option.value;
-            if (value === 'server1') {
-                updateServerText(value);
-            } else {
-                option.disabled = true;
-                option.textContent = `${option.textContent.split(' (')[0]} (locked)`;
-            }
-        });
-    } else {
-        infoText.textContent = 'STATUS : Premium User';
-        infoText.style.color = '#ffb74d'; // Warm amber
+    if (savedKey === getTodayPremiumKey()) {
+        localStorage.setItem('isPremiumActivated', 'true');
     }
+
+    updateStatusMessage();
 };
-
-function activatePremium() {
-    if (!isPremiumUser()) {
-        alert('Invalid premium key.');
-        return;
-    }
-
-    localStorage.setItem('isPremiumActivated', 'true');
-
-    ['server1', 'server2', 'server3'].forEach(serverKey => {
-        localStorage.removeItem(`cooldown_${serverKey}`);
-        const option = document.querySelector(`#server option[value="${serverKey}"]`);
-        option.disabled = false;
-        option.textContent = `${option.textContent.split(' (')[0]} (active)`;
-    });
-
-    const infoText = document.getElementById('info-message');
-    infoText.textContent = 'STATUS : Premium User';
-    infoText.style.color = '#ffb74d';
-
-    alert('Premium activated! Cooldowns removed and servers unlocked.');
-    }
+</script>
