@@ -57,13 +57,19 @@ function updateServerText(server) {
   const cooldown = getCooldownRemaining(server);
 
   if (!isPremiumActivated()) {
-    option.disabled = true;
-    if (cooldown > 0) {
-      const min = Math.floor(cooldown / 60000);
-      const sec = Math.floor((cooldown % 60000) / 1000);
-      option.textContent = `${label} (cooldown ${min}:${sec.toString().padStart(2, '0')})`;
+    if (server === "server1") {
+      if (cooldown > 0) {
+        const min = Math.floor(cooldown / 60000);
+        const sec = Math.floor((cooldown % 60000) / 1000);
+        option.textContent = `${label} (cooldown ${min}:${sec.toString().padStart(2, '0')})`;
+        option.disabled = true;
+      } else {
+        option.textContent = `${label} (available)`;
+        option.disabled = false;
+      }
     } else {
       option.textContent = `${label} (locked)`;
+      option.disabled = true;
     }
   } else {
     option.disabled = false;
