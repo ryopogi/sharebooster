@@ -57,13 +57,13 @@ function updateServerText(serverKey) {
     const remaining = getCooldownRemaining(serverKey);
 
     if (!isPremiumActivated()) {
-        option.disabled = true;
+        option.disabled = (serverKey !== 'server1'); // Only server1 allowed
         if (remaining > 0) {
             const minutes = Math.floor(remaining / 60000);
             const seconds = Math.floor((remaining % 60000) / 1000);
             option.textContent = `${baseText} (cooldown ${minutes}:${seconds.toString().padStart(2, '0')})`;
         } else {
-            option.textContent = `${baseText} (locked)`;
+            option.textContent = `${baseText} (active)`;
         }
     } else {
         option.disabled = false;
@@ -89,7 +89,7 @@ async function checkServerStatus() {
             const response = await fetch(serverUrls[serverKey]);
             if (response.ok && !isCooldownActive(serverKey)) {
                 server.textContent = `${server.textContent.split(' (')[0]} (active)`;
-                server.disabled = !isPremiumActivated();
+                server.disabled = (!isPremiumActivated() && serverKey !== 'server1');
                 allDown = false;
             } else if (!isCooldownActive(serverKey)) {
                 server.textContent = `${server.textContent.split(' (')[0]} (down)`;
@@ -135,7 +135,7 @@ document.getElementById('share-boost-form').onsubmit = async function (event) {
         if (data.status === 200) {
             message.textContent = 'Your request was submitted successfully!';
             if (!isPremiumActivated()) {
-                setCooldown(serverValue, 1440);
+                setCooldown(serverValue, 1440); // 24 hours
             }
         } else {
             message.textContent = `Error: ${data.message}`;
@@ -190,12 +190,29 @@ window.onload = () => {
         localStorage.setItem('premiumKey', premiumInput.value.trim());
     });
 
+    const infoText = document.getElementById('info-message');
+    infoText.style.fontSize = '1rem';
+    infoText.style.fontWeight = 'bold';
+    infoText.style.textAlign = 'center';
+    infoText.style.margin = '10px 0';
+    infoText.style.transition = 'color 0.3s ease';
+
     if (!isPremiumActivated()) {
+        infoText.textContent = 'STATUS : Free User';
+        infoText.style.color = '#00d9ff'; // Cool cyan
         const serverOptions = document.querySelectorAll('#server option');
         serverOptions.forEach(option => {
-            option.disabled = true;
-            option.textContent = `${option.textContent.split(' (')[0]} (locked)`;
+            const value = option.value;
+            if (value === 'server1') {
+                updateServerText(value);
+            } else {
+                option.disabled = true;
+                option.textContent = `${option.textContent.split(' (')[0]} (locked)`;
+            }
         });
+    } else {
+        infoText.textContent = 'STATUS : Premium User';
+        infoText.style.color = '#ffb74d'; // Warm amber
     }
 };
 
@@ -214,5 +231,9 @@ function activatePremium() {
         option.textContent = `${option.textContent.split(' (')[0]} (active)`;
     });
 
+    const infoText = document.getElementById('info-message');
+    infoText.textContent = 'STATUS : Premium User';
+    infoText.style.color = '#ffb74d';
+
     alert('Premium activated! Cooldowns removed and servers unlocked.');
-                                   }
+    }
