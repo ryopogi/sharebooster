@@ -88,11 +88,9 @@ function updateStatusMessage() {
     if (isPremiumActivated()) {
         statusDiv.textContent = 'STATUS: Premium User';
         statusDiv.style.color = '#4caf50';
-    } else if (isCooldownActive('server1')) {
+    } else {
         statusDiv.textContent = 'STATUS: Free User';
         statusDiv.style.color = '#f39c12';
-    } else {
-        statusDiv.textContent = '';
     }
 }
 
