@@ -84,12 +84,12 @@ function refreshCooldownUI() {
 
 function updateStatusText() {
   const infoDiv = document.getElementById("info-message");
-  if (isPremiumUser()) {
-    localStorage.setItem("isPremiumActivated", "true");
+  const activated = isPremiumActivated();
+
+  if (activated) {
     infoDiv.innerText = "STATUS : Premium User";
     infoDiv.style.color = "#4caf50";
   } else {
-    localStorage.setItem("isPremiumActivated", "false");
     infoDiv.innerText = "STATUS : Free User";
     infoDiv.style.color = "#ff9800";
   }
@@ -97,8 +97,15 @@ function updateStatusText() {
 
 setInterval(refreshCooldownUI, 1000);
 
-document.getElementById('premium-key').addEventListener('input', updateStatusText);
+document.getElementById('premium-key').addEventListener('input', () => {
+  const isValid = isPremiumUser();
+  localStorage.setItem("isPremiumActivated", isValid ? "true" : "false");
+  updateStatusText();
+  refreshCooldownUI();
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Ensure status reflects saved activation state
   updateStatusText();
   refreshCooldownUI();
 });
