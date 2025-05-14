@@ -1,4 +1,3 @@
-<script>
 const serverUrls = {
     server1: 'https://server1-project502.onrender.com',
     server2: 'https://server2-project502.onrender.com',
@@ -229,4 +228,3 @@ window.onload = () => {
 
     updateStatusMessage();
 };
-</script>
