@@ -85,6 +85,7 @@ function refreshCooldownUI() {
 function updateStatusText() {
   const infoDiv = document.getElementById("info-message");
   const activated = isPremiumActivated();
+  console.log("Premium activated?", activated);
 
   if (activated) {
     infoDiv.innerText = "STATUS : Premium User";
@@ -105,11 +106,13 @@ document.getElementById('premium-key').addEventListener('input', () => {
   refreshCooldownUI();
 });
 
-// On load, default to free user unless premium is already activated
+// On load, ensure default state
 document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem("isPremiumActivated") !== "true") {
+  const existingStatus = localStorage.getItem("isPremiumActivated");
+  if (existingStatus !== "true" && existingStatus !== "false") {
     localStorage.setItem("isPremiumActivated", "false");
   }
+
   updateStatusText();
   refreshCooldownUI();
 });
