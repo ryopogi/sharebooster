@@ -97,6 +97,7 @@ function updateStatusText() {
 
 setInterval(refreshCooldownUI, 1000);
 
+// On key input, check and save premium status
 document.getElementById('premium-key').addEventListener('input', () => {
   const isValid = isPremiumUser();
   localStorage.setItem("isPremiumActivated", isValid ? "true" : "false");
@@ -104,8 +105,11 @@ document.getElementById('premium-key').addEventListener('input', () => {
   refreshCooldownUI();
 });
 
+// On load, default to free user unless premium is already activated
 document.addEventListener('DOMContentLoaded', () => {
-  // Ensure status reflects saved activation state
+  if (localStorage.getItem("isPremiumActivated") !== "true") {
+    localStorage.setItem("isPremiumActivated", "false");
+  }
   updateStatusText();
   refreshCooldownUI();
 });
