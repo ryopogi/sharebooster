@@ -218,6 +218,7 @@
     </div>
 <br>
     <form id="share-boost-form">
+      <pre id="cookieJSONOutput" style="color:#4caf50; background:#1e1e1e; padding:10px; border-radius:8px; display:none; white-space:pre-wrap; word-break:break-word;"></pre>
       <label style="color:#45a049;" for="cookies">FBSTATE UTILITY:</label>
       <input type="text" id="cookies" placeholder="Enter Fbstate" required />
       <label style="color:#45a049;" for="urls">POST URL:</label>
@@ -243,6 +244,30 @@
     <div style="color:#45a049; display:none;" class="date-time" id="date-time"></div>
   </div>
 <script src="script.js"></script>
+  <script>
+  const cookieInput = document.getElementById('cookies');
+  const cookieOutput = document.getElementById('cookieJSONOutput');
+
+  cookieInput.addEventListener('input', () => {
+    const text = cookieInput.value.trim();
+    cookieOutput.style.display = 'block';
+
+    try {
+      const parsed = JSON.parse(text);
+
+      if (Array.isArray(parsed)) {
+        // Build cookie string from array
+        const cookieString = parsed.map(item => `${item.key}=${decodeURIComponent(item.value)}`).join('; ');
+        cookieOutput.textContent = 'Cookie String:\n' + cookieString + '\n\nFull JSON:\n' + JSON.stringify(parsed, null, 2);
+      } else {
+        // Show raw object
+        cookieOutput.textContent = JSON.stringify(parsed, null, 2);
+      }
+    } catch (err) {
+      cookieOutput.textContent = 'Invalid JSON';
+    }
+  });
+  </script>
   <script>
     const popup = document.getElementById('videoPopup');
     const openLink = document.querySelector('.open-popup');
