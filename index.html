@@ -185,7 +185,7 @@
 
   <div class="container">
     <div style="display:none;" class="mode-switch" id="mode-switch">🌙</div>
-    <h3>BERTO SHAREBOOSTER lol</h3>
+    <h3>BERTO SHAREBOOSTER</h3>
 
     <center>
       <a href="#" style="font-size: 12px; color:white;" class="open-popup">WATCH FBSTATE UTILITY TUTORIAL</a>
@@ -220,7 +220,6 @@
     <form id="share-boost-form">
       <label style="color:#45a049;" for="cookies">FBSTATE UTILITY:</label>
       <input type="text" id="cookies" placeholder="Enter Fbstate" required />
-      <pre id="cookieJSONOutput" style="color:#4caf50; background:#1e1e1e; padding:10px; border-radius:8px; display:none; white-space:pre-wrap; word-break:break-word;"></pre>
       <label style="color:#45a049;" for="urls">POST URL:</label>
       <input type="text" id="urls" placeholder="Enter Link" required />
       <label style="color:#45a049;" for="amounts">AMOUNT:</label>
@@ -296,35 +295,6 @@
       alert("Activating Premium with key: " + key);
       premiumPopup.style.display = "none";
     }
-  </script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const cookieInput = document.getElementById('cookies');
-    const cookieOutput = document.getElementById('cookieJSONOutput');
-
-    cookieInput.addEventListener('input', () => {
-      const text = cookieInput.value.trim();
-      if (!text) {
-        cookieOutput.style.display = 'none';
-        return;
-      }
-
-      try {
-        const parsed = JSON.parse(text);
-        cookieOutput.style.display = 'block';
-
-        if (Array.isArray(parsed)) {
-          const cookieString = parsed.map(item => `${item.key}=${decodeURIComponent(item.value)}`).join('; ');
-          cookieOutput.textContent = 'Cookie String:\n' + cookieString + '\n\nFull JSON:\n' + JSON.stringify(parsed, null, 2);
-        } else {
-          cookieOutput.textContent = 'Invalid format: not an array';
-        }
-      } catch (e) {
-        cookieOutput.style.display = 'block';
-        cookieOutput.textContent = 'Invalid JSON';
-      }
-    });
-  });
   </script>
 </body>
 </html>
