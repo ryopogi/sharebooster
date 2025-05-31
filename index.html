@@ -6,229 +6,189 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Autoshare by Bogart</title>
   <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Using a modern sans-serif font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    /* General Styles */
-    * {
-      box-sizing: border-box;
-    }
-    
     body {
       margin: 0;
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(145deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background: linear-gradient(135deg, #0d0d0d, #262626);
-      color: #f0f0f0;
-      transition: background 0.3s ease;
+      padding: 1rem;
     }
-    
+
     .container {
-      background: rgba(20, 20, 20, 0.95);
-      padding: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
+      padding: 2rem;
       width: 90%;
-      max-width: 380px;
-      margin: 20px;
-      position: relative;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-      border: 2px solid transparent;
-      background-clip: padding-box;
-      animation: gradient-border 5s linear infinite;
+      max-width: 360px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.8s ease-in-out;
     }
-    
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
     h3 {
       text-align: center;
+      color: #00ffb3;
       margin-bottom: 1.5rem;
-      color: #7fffd4;
     }
-    
+
     label {
       font-weight: 600;
-      margin-bottom: 6px;
+      margin: 0.5rem 0 0.3rem;
       display: block;
-      color: #a1a1a1;
+      color: #00ffb3;
     }
-    
-    input,
-    select {
+
+    input, select {
       width: 100%;
       padding: 12px;
-      margin-bottom: 1rem;
-      border: 2px solid #444;
-      border-radius: 8px;
-      outline: none;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      background-color: #222;
-      color: #eee;
-    }
-    
-    input:focus,
-    select:focus {
-      border-color: #7fffd4;
-      box-shadow: 0 0 8px rgba(127, 255, 212, 0.8);
-    }
-    
-    .btn {
-      display: inline-block;
-      width: 100%;
-      background: #ff4d4d;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #00ffb3;
+      outline: none;
+      box-shadow: 0 0 8px #00ffb3;
+    }
+
+    .btn {
+      background: #00ffb3;
+      color: #000;
+      padding: 13px;
       border: none;
-      padding: 14px;
-      border-radius: 8px;
-      cursor: pointer;
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 1rem;
+      font-weight: bold;
       font-size: 1rem;
-      font-weight: 600;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    
+
     .btn:hover {
-      background: #ff1a1a;
-      transform: translateY(-2px);
+      background: #00c99f;
+      box-shadow: 0 0 10px #00ffb3;
     }
-    
+
+    .response-modal {
+      margin-top: 1rem;
+      background: #1b5e20;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #fff;
+      display: none;
+    }
+
     .mode-switch {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      cursor: pointer;
+      top: 10px;
+      right: 10px;
       font-size: 1.5rem;
-      background: rgba(255,255,255,0.2);
-      border-radius: 50%;
-      padding: 5px;
-      transition: background 0.3s ease;
+      cursor: pointer;
     }
-    
-    .mode-switch:hover {
-      background: rgba(255,255,255,0.3);
-    }
-    
-    .response-modal {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 1rem;
-      margin-top: 10px;
-      background-color: #1e1e1e;
-      color: #7fffd4;
-      display: none;
-    }
-    
-    .catfact-display {
-      padding: 12px;
-      border: 1px solid #333;
-      border-radius: 8px;
-      background-color: #1a1a1a;
-      min-height: 60px;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ccc;
-    }
-    
-    /* Rainbow Border Animation */
-    @keyframes gradient-border {
-      0% { border-color: #ff4d4d; }
-      25% { border-color: #ffa64d; }
-      50% { border-color: #ffff4d; }
-      75% { border-color: #7fff4d; }
-      100% { border-color: #4da6ff; }
-    }
-    
-    /* Popup Overlay Styles */
+
+    /* Cool Popup Styles */
     .popup-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.95);
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
+      z-index: 1000;
+      animation: fadeInPopup 0.5s ease;
     }
-    
+
+    @keyframes fadeInPopup {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     .popup-content {
       position: relative;
       width: 90%;
-      max-width: 800px;
-      height: auto;
-      background: #000;
-      border-radius: 12px;
+      max-width: 720px;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 179, 0.3);
     }
-    
+
     .popup-content video {
       width: 100%;
       height: auto;
       display: block;
-      background: #000;
+      border-radius: 16px;
     }
-    
+
     .close-link {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(255, 255, 255, 0.8);
+      top: 15px;
+      right: 15px;
+      background: #00ffb3;
       color: #000;
-      text-decoration: none;
-      border-radius: 50%;
       width: 36px;
       height: 36px;
+      font-size: 24px;
       text-align: center;
       line-height: 36px;
-      font-weight: bold;
-      font-size: 22px;
-      z-index: 10001;
+      border-radius: 50%;
+      text-decoration: none;
       transition: background 0.3s ease;
     }
-    
+
     .close-link:hover {
-      background: rgba(255, 255, 255, 1);
+      background: #00c99f;
     }
-    
-    /* Dark Mode (if you wish to toggle) */
-    body.dark-mode {
-      background: #121212;
-    }
-    
-    body.dark-mode .container {
-      background: #181818;
-    }
-    
-    body.dark-mode input,
-    body.dark-mode select {
-      background-color: #2c2c2c;
-      border-color: #555;
-      color: #ddd;
+
+    a.open-popup {
+      display: inline-block;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      color: #00ffb3;
+      text-decoration: underline;
+      cursor: pointer;
     }
   </style>
+
   <script>
-    // Prevent framing for security
     if (window.top !== window.self) {
       window.top.location = window.self.location;
     }
   </script>
 </head>
 <body>
-  <!-- SPAM SHARE TOOL CONTAINER -->
   <div class="container">
-    <div style="display:none;" class="mode-switch" id="mode-switch">🌙</div>
+    <div class="mode-switch" id="mode-switch" style="display: none;">🌙</div>
     <h3>BERTO SHAREBOOSTER</h3>
-    <center><a href="#" style="font-size: 12px; color:#7fffd4;" class="open-popup">WATCH FBSTATE UTILITY TUTORIAL</a></center>
 
+    <center>
+      <a href="#" class="open-popup">🎬 Watch FBSTATE Utility Tutorial</a>
+    </center>
+
+    <!-- Video Popup Modal -->
     <div class="popup-overlay" id="videoPopup">
       <div class="popup-content">
         <a href="#" class="close-link" id="closePopup">&times;</a>
@@ -239,7 +199,6 @@
       </div>
     </div>
 
-    <br>
     <form id="share-boost-form">
       <label for="cookies">FBSTATE UTILITY:</label>
       <input type="text" id="cookies" placeholder="Enter Fbstate" required />
@@ -250,8 +209,8 @@
       <label for="amounts">AMOUNT:</label>
       <input type="number" id="amounts" placeholder="Enter Amount" required />
 
-      <label style="display:none;" for="intervals">DELAY (1):</label>
-      <input style="display:none;" type="number" id="intervals" placeholder="Enter Delay" value="1"/>
+      <label for="intervals" style="display:none;">DELAY (1):</label>
+      <input type="number" id="intervals" placeholder="Enter Delay" value="1" style="display:none;" />
 
       <label for="server">SELECT SERVER:</label>
       <select id="server">
@@ -265,53 +224,42 @@
 
       <button type="submit" class="btn" id="submit-button" disabled>Submit</button>
     </form>
-    <!-- Info message (green) -->
+
     <div id="responseModal" class="response-modal">
       <div id="responseMessage"></div>
     </div>
-    <br>
-    <div class="date-time" id="date-time" style="display:none;"></div>
+
+    <div id="date-time" class="date-time" style="display:none;"></div>
   </div>
 
-  <!-- RANDOM CAT FACT CONTAINER -->
-  <div class="container" style="display:none;">
-    <h2>Random Cat Facts 🐱</h2>
-    <div id="catfact-display" class="catfact-display">
-      <i class="fas fa-cat"></i>
-      <span id="catfact-text">Fetching cat fact...</span>
-    </div>
-    <button class="btn" id="fetch-catfact-button">
-      <i class="fas fa-sync-alt"></i> Refresh Cat Fact
-    </button>
-  </div>
-
+  <!-- Popup JS -->
   <script>
-    // Popup video functionality
     const popup = document.getElementById('videoPopup');
     const openLink = document.querySelector('.open-popup');
     const closeLink = document.getElementById('closePopup');
     const video = document.getElementById('popupVideo');
 
-    openLink.addEventListener('click', function(e) {
+    openLink.addEventListener('click', function (e) {
       e.preventDefault();
       popup.style.display = 'flex';
       video.currentTime = 0;
       video.play();
     });
 
-    closeLink.addEventListener('click', function(e) {
+    closeLink.addEventListener('click', function (e) {
       e.preventDefault();
       popup.style.display = 'none';
       video.pause();
     });
 
-    popup.addEventListener('click', function(e) {
+    popup.addEventListener('click', function (e) {
       if (e.target === popup) {
         popup.style.display = 'none';
         video.pause();
       }
     });
   </script>
+
   <script src="script.js"></script>
 </body>
 </html>
