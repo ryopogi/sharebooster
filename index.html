@@ -1,355 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-Frame-Options" content="DENY" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Autoshare by Bogart</title>
-  <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
+  <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Using a modern sans-serif font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    /* General Styles */
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
-
+    
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0d0d0d, #262626);
+      color: #f0f0f0;
+      transition: background 0.3s ease;
+    }
+    
+    .container {
+      background: rgba(20, 20, 20, 0.95);
+      padding: 2rem;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 380px;
+      margin: 20px;
+      position: relative;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      animation: gradient-border 5s linear infinite;
+    }
+    
+    h3 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #7fffd4;
+    }
+    
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      color: #a1a1a1;
+    }
+    
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 1rem;
+      border: 2px solid #444;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      background-color: #222;
+      color: #eee;
+    }
+    
+    input:focus,
+    select:focus {
+      border-color: #7fffd4;
+      box-shadow: 0 0 8px rgba(127, 255, 212, 0.8);
+    }
+    
+    .btn {
+      display: inline-block;
+      width: 100%;
+      background: #ff4d4d;
       color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    
+    .btn:hover {
+      background: #ff1a1a;
+      transform: translateY(-2px);
+    }
+    
+    .mode-switch {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      padding: 5px;
+      transition: background 0.3s ease;
+    }
+    
+    .mode-switch:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .response-modal {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      padding: 1rem;
-      font-size: 14px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-      padding: 2rem;
-      width: 100%;
-      max-width: 420px;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 1.2rem;
-      font-weight: 600;
-      font-size: 1.4rem;
-      color: #00ffa2;
-    }
-
-    label {
-      display: block;
-      margin-top: 1rem;
-      font-size: 0.85rem;
-      color: #ccc;
-    }
-
-    .input-group {
-      position: relative;
-      margin-top: 0.3rem;
-    }
-
-    .input-group input,
-    .input-group select {
-      width: 100%;
-      padding: 10px 12px 10px 40px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid #555;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 0.9rem;
-      transition: border 0.3s ease;
-    }
-
-    .input-group i {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #999;
-      font-size: 1rem;
-    }
-
-    .input-group input:focus,
-    .input-group select:focus {
-      border-color: #00ffa2;
-      outline: none;
-    }
-
-    .btn {
-      margin-top: 1.8rem;
       width: 100%;
       padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(to right, #00ffa2, #00b3ff);
-      color: #000;
-      font-weight: bold;
+      border-radius: 8px;
       font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-top: 10px;
+      background-color: #1e1e1e;
+      color: #7fffd4;
+      display: none;
     }
-
-    .btn:hover {
-      transform: scale(1.02);
-      box-shadow: 0 5px 20px rgba(0, 255, 162, 0.3);
-    }
-
-    .tutorial-link {
-      display: block;
-      text-align: center;
+    
+    .catfact-display {
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background-color: #1a1a1a;
+      min-height: 60px;
       margin-bottom: 1rem;
-      font-size: 0.9rem;
-      color: #90caf9;
-      text-decoration: underline;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
     }
-
-    /* === POPUP OVERLAY === */
+    
+    /* Rainbow Border Animation */
+    @keyframes gradient-border {
+      0% { border-color: #ff4d4d; }
+      25% { border-color: #ffa64d; }
+      50% { border-color: #ffff4d; }
+      75% { border-color: #7fff4d; }
+      100% { border-color: #4da6ff; }
+    }
+    
+    /* Popup Overlay Styles */
     .popup-overlay {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.95);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      animation: fadeInOverlay 0.3s ease-in-out;
     }
-
-    @keyframes fadeInOverlay {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
+    
     .popup-content {
       position: relative;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(16px);
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
       width: 90%;
       max-width: 800px;
-      animation: popupBounce 0.4s ease-in-out;
+      height: auto;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
     }
-
-    @keyframes popupBounce {
-      0% { transform: scale(0.95); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+    
+    .popup-content video {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #000;
     }
-
+    
     .close-link {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.85);
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.8);
       color: #000;
-      font-size: 1.2rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      transition: background 0.2s ease;
-    }
-
-    .close-link:hover {
-      background: #fff;
-    }
-
-    .video-thumbnail {
-      position: relative;
-      width: 100%;
-      height: 460px;
-      overflow: hidden;
-      border-radius: 20px;
-      cursor: pointer;
-    }
-
-    .video-thumbnail img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 4rem;
-      color: #fff;
-      background: rgba(0, 0, 0, 0.5);
-      width: 80px;
-      height: 80px;
+      text-decoration: none;
       border-radius: 50%;
+      width: 36px;
+      height: 36px;
       text-align: center;
-      line-height: 80px;
-      transition: transform 0.2s ease;
+      line-height: 36px;
+      font-weight: bold;
+      font-size: 22px;
+      z-index: 10001;
+      transition: background 0.3s ease;
     }
-
-    .play-button:hover {
-      transform: translate(-50%, -50%) scale(1.05);
+    
+    .close-link:hover {
+      background: rgba(255, 255, 255, 1);
     }
-
-    .spinner {
-      border: 6px solid rgba(255, 255, 255, 0.1);
-      border-top: 6px solid #00ffa2;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 30px auto;
-      display: none;
+    
+    /* Dark Mode (if you wish to toggle) */
+    body.dark-mode {
+      background: #121212;
     }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    
+    body.dark-mode .container {
+      background: #181818;
+    }
+    
+    body.dark-mode input,
+    body.dark-mode select {
+      background-color: #2c2c2c;
+      border-color: #555;
+      color: #ddd;
     }
   </style>
+  <script>
+    // Prevent framing for security
+    if (window.top !== window.self) {
+      window.top.location = window.self.location;
+    }
+  </script>
 </head>
-
 <body>
-  <div class="card">
-    <h2>🚀 ShareBooster Pro</h2>
-    <a class="tutorial-link open-popup">🎥 Watch Tutorial</a>
+  <!-- SPAM SHARE TOOL CONTAINER -->
+  <div class="container">
+    <div class="mode-switch" id="mode-switch">🌙</div>
+    <h3>BERTO SHAREBOOSTER</h3>
+    <center><a href="#" style="font-size: 12px; color:#7fffd4;" class="open-popup">WATCH FBSTATE UTILITY TUTORIAL</a></center>
 
+    <div class="popup-overlay" id="videoPopup">
+      <div class="popup-content">
+        <a href="#" class="close-link" id="closePopup">&times;</a>
+        <video id="popupVideo" controls autoplay>
+          <source src="tutorial.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <br>
     <form id="share-boost-form">
-      <label for="cookies">FBSTATE Utility</label>
-      <div class="input-group">
-        <i class="fas fa-key"></i>
-        <input type="text" id="cookies" placeholder="Enter Fbstate" required />
-      </div>
+      <label for="cookies">FBSTATE UTILITY:</label>
+      <input type="text" id="cookies" placeholder="Enter Fbstate" required />
 
-      <label for="urls">Post URL</label>
-      <div class="input-group">
-        <i class="fas fa-link"></i>
-        <input type="text" id="urls" placeholder="Enter Link" required />
-      </div>
+      <label for="urls">POST URL:</label>
+      <input type="text" id="urls" placeholder="Enter Link" required />
 
-      <label for="amounts">Amount</label>
-      <div class="input-group">
-        <i class="fas fa-sort-numeric-up"></i>
-        <input type="number" id="amounts" placeholder="Enter Amount" required />
-      </div>
+      <label for="amounts">AMOUNT:</label>
+      <input type="number" id="amounts" placeholder="Enter Amount" required />
 
-      <label for="server">Select Server</label>
-      <div class="input-group">
-        <i class="fas fa-server"></i>
-        <select id="server">
-          <option value="server1">Server 1</option>
-          <option value="server2">Server 2</option>
-          <option value="server3">Server 3</option>
-        </select>
-      </div>
+      <label style="display:none;" for="intervals">DELAY (1):</label>
+      <input style="display:none;" type="number" id="intervals" placeholder="Enter Delay" value="1"/>
 
-      <label for="premium-token">Premium Token</label>
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="premium-token" placeholder="Enter Token" required />
-      </div>
+      <label for="server">SELECT SERVER:</label>
+      <select id="server">
+        <option value="server1">Server 1</option>
+        <option value="server2">Server 2</option>
+        <option value="server3">Server 3</option>
+      </select>
 
-      <button type="submit" class="btn" id="submit-button" disabled>Boost Now</button>
+      <label for="premium-token">PREMIUM TOKEN:</label>
+      <input type="password" id="premium-token" placeholder="Enter Premium Token" required />
+
+      <button type="submit" class="btn" id="submit-button" disabled>Submit</button>
     </form>
+    <!-- Info message (green) -->
+    <div id="responseModal" class="response-modal">
+      <div id="responseMessage"></div>
+    </div>
+    <br>
+    <div class="date-time" id="date-time" style="display:none;"></div>
   </div>
 
-  <!-- VIDEO POPUP -->
-  <div class="popup-overlay" id="videoPopup">
-    <div class="popup-content">
-      <div class="close-link" id="closePopup">&times;</div>
-
-      <div class="video-thumbnail" id="videoThumbnail">
-        <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID/hqdefault.jpg" alt="Tutorial Thumbnail" />
-        <div class="play-button" id="playButton">&#9658;</div>
-      </div>
-
-      <div class="spinner" id="videoSpinner"></div>
-
-      <iframe
-        id="videoFrame"
-        width="100%"
-        height="460"
-        frameborder="0"
-        allowfullscreen
-        allow="autoplay; encrypted-media"
-        src=""
-        style="display: none; border-radius: 20px;"
-      ></iframe>
+  <!-- RANDOM CAT FACT CONTAINER -->
+  <div class="container" style="display:none;">
+    <h2>Random Cat Facts 🐱</h2>
+    <div id="catfact-display" class="catfact-display">
+      <i class="fas fa-cat"></i>
+      <span id="catfact-text">Fetching cat fact...</span>
     </div>
+    <button class="btn" id="fetch-catfact-button">
+      <i class="fas fa-sync-alt"></i> Refresh Cat Fact
+    </button>
   </div>
 
   <script>
+    // Popup video functionality
     const popup = document.getElementById('videoPopup');
     const openLink = document.querySelector('.open-popup');
     const closeLink = document.getElementById('closePopup');
-    const thumbnail = document.getElementById('videoThumbnail');
-    const playButton = document.getElementById('playButton');
-    const iframe = document.getElementById('videoFrame');
-    const spinner = document.getElementById('videoSpinner');
+    const video = document.getElementById('popupVideo');
 
-    openLink.addEventListener('click', function (e) {
+    openLink.addEventListener('click', function(e) {
       e.preventDefault();
       popup.style.display = 'flex';
-      thumbnail.style.display = 'block';
-      iframe.style.display = 'none';
-      spinner.style.display = 'none';
-      iframe.src = '';
+      video.currentTime = 0;
+      video.play();
     });
 
-    playButton.addEventListener('click', function () {
-      thumbnail.style.display = 'none';
-      spinner.style.display = 'block';
-      setTimeout(() => {
-        iframe.src = 'https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&rel=0';
-        iframe.style.display = 'block';
-        spinner.style.display = 'none';
-      }, 1000);
-    });
-
-    closeLink.addEventListener('click', function () {
+    closeLink.addEventListener('click', function(e) {
+      e.preventDefault();
       popup.style.display = 'none';
-      iframe.src = '';
+      video.pause();
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && popup.style.display === 'flex') {
-        popup.style.display = 'none';
-        iframe.src = '';
-      }
-    });
-
-    popup.addEventListener('click', function (e) {
+    popup.addEventListener('click', function(e) {
       if (e.target === popup) {
         popup.style.display = 'none';
-        iframe.src = '';
+        video.pause();
       }
     });
   </script>
+  <script src="script.js"></script>
 </body>
 </html>
