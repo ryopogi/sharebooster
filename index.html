@@ -6,86 +6,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Autoshare by Bogart</title>
   <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Base Styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #121212;
-      color: #fff;
+    /* Reset + Base */
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #111;
+      color: #f0f0f0;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      padding: 2rem;
     }
 
     .container {
-      background-color: #1e1e1e;
+      background: #1a1a1a;
       padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
+      border-radius: 12px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
     }
 
     h3 {
+      text-align: center;
       color: #4caf50;
-      margin-bottom: 1rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
     }
 
     label {
       display: block;
-      text-align: left;
-      margin: 0.8rem 0 0.3rem;
-      color: #4caf50;
-      font-weight: 500;
+      margin-top: 1rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      color: #ccc;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
-      padding: 10px;
-      background: #181818;
-      border: 2px solid #4caf50;
-      border-radius: 8px;
+      padding: 10px 12px;
+      background: #2a2a2a;
       color: #fff;
-      margin-bottom: 1rem;
+      border: 1px solid #444;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border 0.3s ease;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #4caf50;
+      outline: none;
     }
 
     .btn {
+      margin-top: 1.5rem;
       width: 100%;
-      background-color: #e53935;
+      padding: 12px;
+      background-color: #4caf50;
       color: white;
       border: none;
-      padding: 12px;
       border-radius: 8px;
       font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
-    .btn:hover {
+    .btn:disabled {
+      background-color: #888;
+      cursor: not-allowed;
+    }
+
+    .btn:hover:enabled {
       background-color: #43a047;
     }
 
-    /* Tutorial Link */
     .tutorial-link {
-      font-size: 0.9rem;
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 1rem;
       color: #90caf9;
+      font-size: 0.9rem;
       text-decoration: underline;
       cursor: pointer;
-      display: inline-block;
-      margin-bottom: 1.5rem;
     }
 
-    /* Video Popup Styles */
+    /* Popup Styles */
     .popup-overlay {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-color: rgba(0, 0, 0, 0.9);
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
       display: none;
       align-items: center;
       justify-content: center;
@@ -98,48 +120,38 @@
       max-width: 800px;
       border-radius: 12px;
       overflow: hidden;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
     }
 
     .popup-content video {
       width: 100%;
       height: auto;
-      background: black;
       display: block;
+      background: black;
     }
 
     .close-link {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: #fff;
+      top: 12px;
+      right: 12px;
+      background: #fff;
       color: #000;
-      text-decoration: none;
       font-weight: bold;
-      font-size: 1.2rem;
+      text-decoration: none;
+      font-size: 1.4rem;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      line-height: 36px;
       text-align: center;
+      line-height: 32px;
       z-index: 10001;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 600px) {
-      .container {
-        padding: 1rem;
-      }
-
-      .popup-content {
-        width: 95%;
-      }
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h3>BERTO SHAREBOOSTER</h3>
+    <h3>🚀 BERTO SHAREBOOSTER</h3>
     <a class="tutorial-link open-popup">📺 Watch FBSTATE Utility Tutorial</a>
 
     <!-- Video Popup -->
@@ -154,38 +166,37 @@
     </div>
 
     <form id="share-boost-form">
-      <label for="cookies">FBSTATE UTILITY:</label>
+      <label for="cookies">FBSTATE Utility:</label>
       <input type="text" id="cookies" placeholder="Enter Fbstate" required />
 
-      <label for="urls">POST URL:</label>
+      <label for="urls">Post URL:</label>
       <input type="text" id="urls" placeholder="Enter Link" required />
 
-      <label for="amounts">AMOUNT:</label>
+      <label for="amounts">Amount:</label>
       <input type="number" id="amounts" placeholder="Enter Amount" required />
 
-      <label style="display:none;" for="intervals">DELAY (1):</label>
-      <input style="display:none;" type="number" id="intervals" value="1" />
+      <input type="number" id="intervals" value="1" style="display:none;" />
 
-      <label for="server">SELECT SERVER:</label>
+      <label for="server">Select Server:</label>
       <select id="server">
         <option value="server1">Server 1</option>
         <option value="server2">Server 2</option>
         <option value="server3">Server 3</option>
       </select>
 
-      <label for="premium-token">PREMIUM TOKEN:</label>
+      <label for="premium-token">Premium Token:</label>
       <input type="password" id="premium-token" placeholder="Enter Premium Token" required />
 
       <button type="submit" class="btn" id="submit-button" disabled>Submit</button>
     </form>
 
-    <!-- Response Modal -->
-    <div id="responseModal" class="response-modal" style="display:none;">
+    <!-- Response Area -->
+    <div id="responseModal" class="response-modal" style="display:none; margin-top: 1rem;">
       <div id="responseMessage"></div>
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- JavaScript for popup -->
   <script>
     const popup = document.getElementById('videoPopup');
     const openLink = document.querySelector('.open-popup');
