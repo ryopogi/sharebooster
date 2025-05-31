@@ -276,16 +276,6 @@ body.dark-mode .btn:hover {
       video.pause();
     }
   });
-        (function monitorEruda() {
-  const destroyEruda = () => {
-    if (window.eruda) {
-      eruda.destroy();
-      console.log("Eruda was removed.");
-    }
-  };
-
-  setInterval(destroyEruda, 1000);
-})();
     </script>
     <script src="script.js"></script>
 </body>
