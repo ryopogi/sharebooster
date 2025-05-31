@@ -6,9 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Autoshare by Bogart</title>
   <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    /* === GLOBAL RESET === */
+    :root {
+      --primary: #00ffa2;
+      --secondary: #00b3ff;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --shadow-color: rgba(0, 0, 0, 0.6);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -22,21 +30,26 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       padding: 2rem;
     }
 
-    /* === CARD CONTAINER === */
     .card {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--glass-bg);
       backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-      padding: 2rem;
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      box-shadow: 0 8px 24px var(--shadow-color);
+      padding: 2.5rem;
       width: 100%;
-      max-width: 420px;
-      animation: fadeIn 1s ease-in-out;
+      max-width: 450px;
+      animation: fadeIn 0.8s ease-in-out;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 255, 162, 0.15);
     }
 
     @keyframes fadeIn {
@@ -46,30 +59,44 @@
 
     h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
       font-weight: 600;
-      color: #00ffa2;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .tutorial-link {
+      display: block;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--secondary);
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .tutorial-link:hover {
+      color: var(--primary);
     }
 
     label {
-      display: block;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #ddd;
+      font-size: 0.85rem;
+      margin-top: 1.2rem;
+      color: #ccc;
     }
 
     .input-group {
       position: relative;
-      margin-top: 0.3rem;
+      margin-top: 0.5rem;
     }
 
     .input-group input,
     .input-group select {
       width: 100%;
-      padding: 10px 12px 10px 40px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid #555;
-      border-radius: 10px;
+      padding: 12px 14px 12px 42px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid #444;
+      border-radius: 12px;
       color: #fff;
       font-size: 0.95rem;
       transition: border 0.3s ease;
@@ -77,54 +104,43 @@
 
     .input-group i {
       position: absolute;
-      left: 12px;
       top: 50%;
+      left: 14px;
       transform: translateY(-50%);
-      color: #999;
-      font-size: 1rem;
+      color: #aaa;
     }
 
     .input-group input:focus,
     .input-group select:focus {
-      border-color: #00ffa2;
+      border-color: var(--primary);
       outline: none;
     }
 
     .btn {
-      margin-top: 1.8rem;
+      display: block;
+      margin-top: 2rem;
       width: 100%;
-      padding: 12px;
+      padding: 13px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
       border: none;
-      border-radius: 10px;
-      background: linear-gradient(to right, #00ffa2, #00b3ff);
+      border-radius: 12px;
       color: #000;
-      font-weight: bold;
       font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 255, 162, 0.2);
+      transition: all 0.25s ease;
     }
 
     .btn:hover {
-      transform: scale(1.02);
-      box-shadow: 0 5px 20px rgba(0, 255, 162, 0.3);
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0, 255, 162, 0.3);
     }
 
-    .tutorial-link {
-      display: block;
-      text-align: center;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #90caf9;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    /* === POPUP === */
     .popup-overlay {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.9);
       display: none;
       align-items: center;
@@ -134,42 +150,53 @@
 
     .popup-content {
       position: relative;
-      width: 90%;
+      width: 92%;
       max-width: 800px;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
     }
 
     .popup-content video {
       width: 100%;
-      height: auto;
-      display: block;
       background: black;
     }
 
     .close-link {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
       background: #fff;
       color: #000;
       font-weight: bold;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       text-align: center;
-      line-height: 32px;
       border-radius: 50%;
-      width: 34px;
-      height: 34px;
       cursor: pointer;
       z-index: 10001;
+      line-height: 36px;
+    }
+
+    @media (max-width: 500px) {
+      .card {
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .btn {
+        font-size: 0.95rem;
+      }
     }
   </style>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="card">
     <h2>🚀 ShareBooster Pro</h2>
-    <a class="tutorial-link open-popup">🎥 Watch Tutorial</a>
+    <a class="tutorial-link open-popup" href="#">🎥 Watch Tutorial</a>
 
     <form id="share-boost-form">
       <label for="cookies">FBSTATE Utility</label>
@@ -206,11 +233,11 @@
         <input type="password" id="premium-token" placeholder="Enter Token" required />
       </div>
 
-      <button type="submit" class="btn" id="submit-button" disabled>Boost Now</button>
+      <button type="submit" class="btn" id="submit-button" disabled>🚀 Boost Now</button>
     </form>
   </div>
 
-  <!-- VIDEO POPUP -->
+  <!-- POPUP -->
   <div class="popup-overlay" id="videoPopup">
     <div class="popup-content">
       <div class="close-link" id="closePopup">&times;</div>
@@ -234,8 +261,7 @@
       video.play();
     });
 
-    closeLink.addEventListener('click', function (e) {
-      e.preventDefault();
+    closeLink.addEventListener('click', function () {
       popup.style.display = 'none';
       video.pause();
     });
