@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autoshare by Bogart</title>
+  <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #1e1e1e;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h3 {
+      color: #4caf50;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin: 0.8rem 0 0.3rem;
+      color: #4caf50;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      background: #181818;
+      border: 2px solid #4caf50;
+      border-radius: 8px;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      width: 100%;
+      background-color: #e53935;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #43a047;
+    }
+
+    /* Tutorial Link */
+    .tutorial-link {
+      font-size: 0.9rem;
+      color: #90caf9;
+      text-decoration: underline;
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Video Popup Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .popup-content {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .popup-content video {
+      width: 100%;
+      height: auto;
+      background: black;
+      display: block;
+    }
+
+    .close-link {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #fff;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      z-index: 10001;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .popup-content {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>BERTO SHAREBOOSTER</h3>
+    <a class="tutorial-link open-popup">📺 Watch FBSTATE Utility Tutorial</a>
+
+    <!-- Video Popup -->
+    <div class="popup-overlay" id="videoPopup">
+      <div class="popup-content">
+        <a href="#" class="close-link" id="closePopup">&times;</a>
+        <video id="popupVideo" controls autoplay>
+          <source src="tutorial.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <form id="share-boost-form">
+      <label for="cookies">FBSTATE UTILITY:</label>
+      <input type="text" id="cookies" placeholder="Enter Fbstate" required />
+
+      <label for="urls">POST URL:</label>
+      <input type="text" id="urls" placeholder="Enter Link" required />
+
+      <label for="amounts">AMOUNT:</label>
+      <input type="number" id="amounts" placeholder="Enter Amount" required />
+
+      <label style="display:none;" for="intervals">DELAY (1):</label>
+      <input style="display:none;" type="number" id="intervals" value="1" />
+
+      <label for="server">SELECT SERVER:</label>
+      <select id="server">
+        <option value="server1">Server 1</option>
+        <option value="server2">Server 2</option>
+        <option value="server3">Server 3</option>
+      </select>
+
+      <label for="premium-token">PREMIUM TOKEN:</label>
+      <input type="password" id="premium-token" placeholder="Enter Premium Token" required />
+
+      <button type="submit" class="btn" id="submit-button" disabled>Submit</button>
+    </form>
+
+    <!-- Response Modal -->
+    <div id="responseModal" class="response-modal" style="display:none;">
+      <div id="responseMessage"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const popup = document.getElementById('videoPopup');
+    const openLink = document.querySelector('.open-popup');
+    const closeLink = document.getElementById('closePopup');
+    const video = document.getElementById('popupVideo');
+
+    openLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      popup.style.display = 'flex';
+      video.currentTime = 0;
+      video.play();
+    });
+
+    closeLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      popup.style.display = 'none';
+      video.pause();
+    });
+
+    popup.addEventListener('click', function (e) {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+        video.pause();
+      }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
