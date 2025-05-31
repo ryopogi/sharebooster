@@ -6,19 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Autoshare by Bogart</title>
   <link rel="icon" href="https://i.imgur.com/bIOj3vS.jpeg" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <style>
-    :root {
-      --primary: #00ffa2;
-      --secondary: #00b3ff;
-      --glass-bg: rgba(255, 255, 255, 0.05);
-      --border-color: rgba(255, 255, 255, 0.1);
-      --shadow-color: rgba(0, 0, 0, 0.5);
-      --text-light: #ccc;
-      font-size: 14.5px; /* slightly smaller base font */
-    }
 
+  <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -32,26 +23,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
+      height: 100vh;
+      padding: 1rem;
+      font-size: 14px;
     }
 
     .card {
-      background: var(--glass-bg);
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(14px);
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      box-shadow: 0 6px 18px var(--shadow-color);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
       padding: 2rem;
       width: 100%;
-      max-width: 440px;
-      animation: fadeIn 0.7s ease-out;
-      transition: all 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(0, 255, 162, 0.2);
+      max-width: 420px;
+      animation: fadeIn 1s ease-in-out;
     }
 
     @keyframes fadeIn {
@@ -61,146 +47,198 @@
 
     h2 {
       text-align: center;
-      font-size: 1.6rem;
-      font-weight: 600;
       margin-bottom: 1.2rem;
-      color: var(--primary);
-    }
-
-    .tutorial-link {
-      display: block;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--secondary);
-      text-decoration: none;
-      margin-bottom: 1.5rem;
-      transition: color 0.2s ease;
-    }
-
-    .tutorial-link:hover {
-      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: #00ffa2;
     }
 
     label {
-      font-size: 0.8rem;
-      margin-top: 1rem;
       display: block;
-      color: var(--text-light);
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: #ccc;
     }
 
     .input-group {
       position: relative;
-      margin-top: 0.4rem;
+      margin-top: 0.3rem;
     }
 
     .input-group input,
     .input-group select {
       width: 100%;
-      padding: 10px 12px 10px 38px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid #444;
+      padding: 10px 12px 10px 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #555;
       border-radius: 10px;
       color: #fff;
       font-size: 0.9rem;
-      transition: border 0.25s ease;
+      transition: border 0.3s ease;
     }
 
     .input-group i {
       position: absolute;
-      top: 50%;
       left: 12px;
+      top: 50%;
       transform: translateY(-50%);
       color: #999;
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
 
     .input-group input:focus,
     .input-group select:focus {
-      border-color: var(--primary);
+      border-color: #00ffa2;
       outline: none;
     }
 
     .btn {
-      display: block;
-      margin-top: 1.7rem;
+      margin-top: 1.8rem;
       width: 100%;
-      padding: 11px;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+      padding: 12px;
       border: none;
       border-radius: 10px;
+      background: linear-gradient(to right, #00ffa2, #00b3ff);
       color: #000;
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: bold;
+      font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0, 255, 162, 0.2);
-      transition: all 0.25s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn:hover {
       transform: scale(1.02);
-      box-shadow: 0 6px 22px rgba(0, 255, 162, 0.3);
+      box-shadow: 0 5px 20px rgba(0, 255, 162, 0.3);
     }
 
+    .tutorial-link {
+      display: block;
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #90caf9;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* === POPUP OVERLAY === */
     .popup-overlay {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0, 0, 0, 0.9);
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 9999;
+      animation: fadeInOverlay 0.3s ease-in-out;
+    }
+
+    @keyframes fadeInOverlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .popup-content {
       position: relative;
-      width: 92%;
-      max-width: 800px;
-      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
       overflow: hidden;
+      width: 90%;
+      max-width: 800px;
+      animation: popupBounce 0.4s ease-in-out;
     }
 
-    .popup-content video {
-      width: 100%;
-      background: black;
+    @keyframes popupBounce {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     .close-link {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 32px;
-      height: 32px;
-      background: #fff;
-      color: #000;
-      font-weight: bold;
-      font-size: 1.2rem;
-      text-align: center;
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      color: #000;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      z-index: 10001;
-      line-height: 32px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      transition: background 0.2s ease;
     }
 
-    @media (max-width: 500px) {
-      :root {
-        font-size: 13.5px;
-      }
+    .close-link:hover {
+      background: #fff;
+    }
 
-      .card {
-        padding: 1.5rem;
-      }
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 460px;
+      overflow: hidden;
+      border-radius: 20px;
+      cursor: pointer;
+    }
 
-      h2 {
-        font-size: 1.4rem;
-      }
+    .video-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 4rem;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.5);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 80px;
+      transition: transform 0.2s ease;
+    }
+
+    .play-button:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .spinner {
+      border: 6px solid rgba(255, 255, 255, 0.1);
+      border-top: 6px solid #00ffa2;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 30px auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h2>🚀 ShareBooster Pro</h2>
-    <a class="tutorial-link open-popup" href="#">🎥 Watch Tutorial</a>
+    <a class="tutorial-link open-popup">🎥 Watch Tutorial</a>
 
     <form id="share-boost-form">
       <label for="cookies">FBSTATE Utility</label>
@@ -237,7 +275,7 @@
         <input type="password" id="premium-token" placeholder="Enter Token" required />
       </div>
 
-      <button type="submit" class="btn" id="submit-button" disabled>🚀 Boost Now</button>
+      <button type="submit" class="btn" id="submit-button" disabled>Boost Now</button>
     </form>
   </div>
 
@@ -245,10 +283,24 @@
   <div class="popup-overlay" id="videoPopup">
     <div class="popup-content">
       <div class="close-link" id="closePopup">&times;</div>
-      <video id="popupVideo" controls autoplay>
-        <source src="tutorial.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+
+      <div class="video-thumbnail" id="videoThumbnail">
+        <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID/hqdefault.jpg" alt="Tutorial Thumbnail" />
+        <div class="play-button" id="playButton">&#9658;</div>
+      </div>
+
+      <div class="spinner" id="videoSpinner"></div>
+
+      <iframe
+        id="videoFrame"
+        width="100%"
+        height="460"
+        frameborder="0"
+        allowfullscreen
+        allow="autoplay; encrypted-media"
+        src=""
+        style="display: none; border-radius: 20px;"
+      ></iframe>
     </div>
   </div>
 
@@ -256,27 +308,48 @@
     const popup = document.getElementById('videoPopup');
     const openLink = document.querySelector('.open-popup');
     const closeLink = document.getElementById('closePopup');
-    const video = document.getElementById('popupVideo');
+    const thumbnail = document.getElementById('videoThumbnail');
+    const playButton = document.getElementById('playButton');
+    const iframe = document.getElementById('videoFrame');
+    const spinner = document.getElementById('videoSpinner');
 
     openLink.addEventListener('click', function (e) {
       e.preventDefault();
       popup.style.display = 'flex';
-      video.currentTime = 0;
-      video.play();
+      thumbnail.style.display = 'block';
+      iframe.style.display = 'none';
+      spinner.style.display = 'none';
+      iframe.src = '';
+    });
+
+    playButton.addEventListener('click', function () {
+      thumbnail.style.display = 'none';
+      spinner.style.display = 'block';
+      setTimeout(() => {
+        iframe.src = 'https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&rel=0';
+        iframe.style.display = 'block';
+        spinner.style.display = 'none';
+      }, 1000);
     });
 
     closeLink.addEventListener('click', function () {
       popup.style.display = 'none';
-      video.pause();
+      iframe.src = '';
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popup.style.display === 'flex') {
+        popup.style.display = 'none';
+        iframe.src = '';
+      }
     });
 
     popup.addEventListener('click', function (e) {
       if (e.target === popup) {
         popup.style.display = 'none';
-        video.pause();
+        iframe.src = '';
       }
     });
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
